@@ -105,7 +105,9 @@ export default function AdminDashboard() {
 
   const fetchOverview = async () => {
     try {
-      const response = await fetch("process.env.NEXT_PUBLIC_DASHBOARD_API_URL"); //http://localhost:5001/api/admin/overview
+      const response = await fetch(
+        "process.env.NEXT_PUBLIC_DASHBOARD_API_URL/api/admin/overview"
+      ); //http://localhost:5001/api/admin/overview
       const data = await response.json();
       setOverviewStats(data);
     } catch (error) {
