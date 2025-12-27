@@ -7,16 +7,16 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "components/ui/card";
-import { Button } from "components/ui/button";
+} from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "components/ui/select";
-import { Badge } from "components/ui/badge";
+} from "../../components/ui/select";
+import { Badge } from "../../components/ui/badge";
 import {
   BarChart3,
   Download,

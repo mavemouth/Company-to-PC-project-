@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, FileText, Calendar, MessageSquare, Info } from "lucide-react";
-import { Badge } from "components/ui/badge";
-import { useUser } from "components/user-context";
+import { Badge } from "../components/ui/badge";
+import { useUser } from "../components/user-context";
 
 // Define navigation items based on user role
 const adminNavigation = [

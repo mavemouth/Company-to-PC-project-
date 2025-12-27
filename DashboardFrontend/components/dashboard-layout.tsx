@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useUser } from "components/user-context";
-import { Sidebar } from "@/components/sidebar";
+import { useUser } from "../components/user-context";
+import { Sidebar } from "../components/sidebar";
 import { Bell } from "lucide-react";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {

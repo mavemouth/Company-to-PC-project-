@@ -7,14 +7,14 @@ import {
   Users,
   ArrowLeft,
 } from "lucide-react";
-import { Button } from "components/ui/button";
+import { Button } from "../components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "components/ui/dropdown-menu";
+} from "../components/ui/dropdown-menu";
 import {
   Dialog,
   DialogContent,
@@ -22,9 +22,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "components/ui/dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar";
-import { useUser, followUpTeamMembers } from "components/user-context";
+} from "../components/ui/dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
+import { useUser, followUpTeamMembers } from "../components/user-context";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
