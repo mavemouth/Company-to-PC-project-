@@ -1,0 +1,67 @@
+DEPARTMENT PLACEMENT REPORT
+Department: CSED
+Generated: 11/6/2025
+
+STATISTICS:
+- Total Companies: 56
+- Total Openings: 14
+- Average Package: 0 LPA
+- Highest Package: 0 LPA
+
+COMPANIES:
+1. wikipedia
+2. mahindra
+3. tata
+4. microsoft
+5. Amazon
+6. tcs
+7. mahindra
+8. google
+9. wikipedia
+10. Amazon
+11. wikipedia
+12. google
+13. Amazon
+14. google
+15. Wikipedia
+16. Amazon
+17. google
+18. google
+19. wikipedia
+20. Amazon
+21. wikipedia
+22. google
+23. tcs
+24. google
+25. wikipedia
+26. Amazon
+27. johny
+28. sukoon
+29. pari
+30. pari
+31. jasman
+32. william
+33. arushi
+34. jarvis
+35. roshni
+36. diya
+37. jeff bezos
+38. arush
+39. siddharth
+40. paji
+41. paji
+42. paji
+43. jenny
+44. marie
+45. george
+46. sham
+47. aditya
+48. shaikh
+49. sukh
+50. paji
+51. nakul bond
+52. james bond
+53. james bond
+54. jane williams
+55. jane williams
+56. jane williams

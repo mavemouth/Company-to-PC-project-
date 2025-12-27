@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "email": "admin@ctpc.edu",
+    "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "admin",
+    "name": "Admin User",
+    "company": "CTPC",
+    "createdAt": "2025-09-25T17:25:08.210Z"
+  },
+  {
+    "id": 2,
+    "email": "hr@ctpc.edu",
+    "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "hr",
+    "name": "HR User",
+    "company": "CTPC",
+    "createdAt": "2025-09-25T17:25:08.211Z"
+  },
+  {
+    "id": 3,
+    "email": "jeff@gmail.com",
+    "password": "$2b$10$TOX0hB5uky5uZDPXng32Xu45F4qJ89/wg4gCSJJjJzuYFgzgi6wb2",
+    "role": "hr",
+    "name": "jeff bezos",
+    "company": "jeff bezos",
+    "createdAt": "2025-09-25T17:29:05.474Z"
+  },
+  {
+    "id": 4,
+    "email": "diya@gmail.com",
+    "password": "$2b$10$rx1guZRnLf9dOKgdhpwofueL.G9/vIoaIXKBNOUZcalgiEHcW0bbC",
+    "role": "hr",
+    "name": "diya",
+    "company": "diya",
+    "createdAt": "2025-09-25T17:35:07.388Z"
+  },
+  {
+    "id": 5,
+    "email": "roshni@gmail.com",
+    "password": "$2b$10$cfe7lrY9XVWKNYB0v4dfxOfXenAHz/Ccn8r6ayscLpjoy6P7fad8C",
+    "role": "hr",
+    "name": "roshni",
+    "company": "roshni",
+    "createdAt": "2025-09-26T14:58:17.658Z"
+  },
+  {
+    "id": 6,
+    "email": "jarvis@gmail.com",
+    "password": "$2b$10$BbwjcnqcbfTI0AEKF6mY8OdIzjvt4CoSbhUg0X9ktPIVEx4HQU.xq",
+    "role": "hr",
+    "name": "jarvis",
+    "company": "jarvis",
+    "createdAt": "2025-09-26T15:14:20.649Z"
+  },
+  {
+    "id": 7,
+    "email": "joseph@gmail.com",
+    "password": "$2b$10$7Wa2FlSRVLoEqM24uSaDc.N9D2KZcAsRKGW8sLRwjcgA4SP7YJLsS",
+    "role": "hr",
+    "name": "joseph",
+    "company": "joseph",
+    "createdAt": "2025-10-24T05:45:57.565Z"
+  }
+]
