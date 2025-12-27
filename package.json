@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "cd DashboardFrontend && npm install && npm run build && cd ../FormFrontend && npm install && npm run build",
-    "start": "concurrently \"cd DashboardBackend && npm start\" \"cd FormBackend && npm start\" \"cd DashboardFrontend && npm start\" \"cd FormFrontend && npm start\"",
+    "start": "npx concurrently \"cd DashboardBackend && npm start\" \"cd FormBackend && npm start\" \"cd DashboardFrontend && npm start\" \"cd FormFrontend && npm start\"",
     "dev": "concurrently \"cd DashboardBackend && npm run dev\" \"cd FormBackend && npm run dev\" \"cd DashboardFrontend && npm run dev\" \"cd FormFrontend && npm run dev\""
   },
   "repository": {
