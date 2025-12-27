@@ -1,12 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const { createServer } = require('http');
-const { setupRoutes } = require('./routes');
-const { errorHandler } = require('./middleware/errorHandler');
-const { requestLogger } = require('./middleware/requestLogger');
-const SocketServer = require('./modules/websocket/socketServer');
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const { createServer } = require("http");
+const { setupRoutes } = require("./routes");
+const { errorHandler } = require("./middleware/errorHandler");
+const { requestLogger } = require("./middleware/requestLogger");
+const SocketServer = require("./modules/websocket/socketServer");
 
 // Load environment variables
 dotenv.config();
@@ -19,16 +19,22 @@ const httpServer = createServer(app);
 const socketServer = new SocketServer(httpServer);
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(requestLogger);
 
 // Connect to MongoDB (same database as FormBackend)
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/hr_form")
+mongoose
+  .connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/hr_form")
   .then(() => {
     console.log("✅ MongoDB Connected");
     // Load all models
-    require('./models');
+    require("./models");
   })
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
