@@ -67,6 +67,8 @@
     "vaul": "latest",
     "@types/node": "^22",
     "typescript": "^5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "zod": "^3.24.1"
   },
   "devDependencies": {
