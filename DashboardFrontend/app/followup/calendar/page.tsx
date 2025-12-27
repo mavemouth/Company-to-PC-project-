@@ -1,9 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Calendar as CalendarComponent } from "components/ui/calendar";
-import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
-import { Button } from "components/ui/button";
+import { Calendar as CalendarComponent } from "../../../components/ui/calendar";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../../components/ui/card";
+import { Button } from "../../../components/ui/button";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 import {
   Dialog,
@@ -11,11 +16,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "components/ui/dialog";
-import { Input } from "components/ui/input";
-import { Label } from "components/ui/label";
-import { Textarea } from "components/ui/textarea";
-import { useToast } from "hooks/use-toast";
+} from "../../../components/ui/dialog";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
+import { Textarea } from "../../../components/ui/textarea";
+import { useToast } from "../../../hooks/use-toast";
 
 interface Event {
   id: string;
