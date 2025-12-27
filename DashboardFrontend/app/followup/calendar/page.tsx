@@ -1,120 +1,137 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Calendar as CalendarComponent } from '@/components/ui/calendar'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Plus, Edit2, Trash2 } from 'lucide-react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { useToast } from '@/hooks/use-toast'
+import { useState, useEffect } from "react";
+import { Calendar as CalendarComponent } from "components/ui/calendar";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { Button } from "components/ui/button";
+import { Plus, Edit2, Trash2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "components/ui/dialog";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { Textarea } from "components/ui/textarea";
+import { useToast } from "hooks/use-toast";
 
 interface Event {
-  id: string
-  title: string
-  description: string
-  date: Date
-  type: 'meeting' | 'followup' | 'deadline'
+  id: string;
+  title: string;
+  description: string;
+  date: Date;
+  type: "meeting" | "followup" | "deadline";
 }
 
 export default function CalendarPage() {
-  const [date, setDate] = useState<Date>(new Date())
-  const [events, setEvents] = useState<Event[]>([])
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
-  const [isAddEventOpen, setIsAddEventOpen] = useState(false)
-  const { toast } = useToast()
+  const [date, setDate] = useState<Date>(new Date());
+  const [events, setEvents] = useState<Event[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [isAddEventOpen, setIsAddEventOpen] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
-    fetchEvents()
-  }, [])
+    fetchEvents();
+  }, []);
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/followup/calendar', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      const response = await fetch(
+        "http://localhost:5001/api/followup/calendar",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      })
-      const data = await response.json()
+      );
+      const data = await response.json();
       if (data.success) {
-        setEvents(data.events.map((event: any) => ({
-          ...event,
-          date: new Date(event.date)
-        })))
+        setEvents(
+          data.events.map((event: any) => ({
+            ...event,
+            date: new Date(event.date),
+          }))
+        );
       }
     } catch (error) {
-      console.error('Error fetching events:', error)
+      console.error("Error fetching events:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to fetch events',
-        variant: 'destructive'
-      })
+        title: "Error",
+        description: "Failed to fetch events",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   const handleAddEvent = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const newEvent = {
-      title: formData.get('title') as string,
-      description: formData.get('description') as string,
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
       date: date,
-      type: formData.get('type') as 'meeting' | 'followup' | 'deadline'
-    }
+      type: formData.get("type") as "meeting" | "followup" | "deadline",
+    };
 
     try {
-      const response = await fetch('http://localhost:5001/api/followup/calendar/events', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newEvent)
-      })
+      const response = await fetch(
+        "http://localhost:5001/api/followup/calendar/events",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newEvent),
+        }
+      );
 
-      const data = await response.json()
+      const data = await response.json();
       if (data.success) {
         toast({
-          title: 'Success',
-          description: 'Event added successfully'
-        })
-        fetchEvents()
-        setIsAddEventOpen(false)
+          title: "Success",
+          description: "Event added successfully",
+        });
+        fetchEvents();
+        setIsAddEventOpen(false);
       }
     } catch (error) {
-      console.error('Error adding event:', error)
+      console.error("Error adding event:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to add event',
-        variant: 'destructive'
-      })
+        title: "Error",
+        description: "Failed to add event",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   const handleDeleteEvent = async (eventId: string) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/followup/calendar/events/${eventId}`, {
-        method: 'DELETE'
-      })
+      const response = await fetch(
+        `http://localhost:5001/api/followup/calendar/events/${eventId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
-      const data = await response.json()
+      const data = await response.json();
       if (data.success) {
         toast({
-          title: 'Success',
-          description: 'Event deleted successfully'
-        })
-        fetchEvents()
+          title: "Success",
+          description: "Event deleted successfully",
+        });
+        fetchEvents();
       }
     } catch (error) {
-      console.error('Error deleting event:', error)
+      console.error("Error deleting event:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to delete event',
-        variant: 'destructive'
-      })
+        title: "Error",
+        description: "Failed to delete event",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   return (
     <div className="flex gap-6">
@@ -129,7 +146,10 @@ export default function CalendarPage() {
             onSelect={(date) => date && setDate(date)}
             className="rounded-md border"
           />
-          <Button className="w-full mt-4" onClick={() => setIsAddEventOpen(true)}>
+          <Button
+            className="w-full mt-4"
+            onClick={() => setIsAddEventOpen(true)}
+          >
             <Plus className="w-4 h-4 mr-2" />
             Add Event
           </Button>
@@ -143,24 +163,24 @@ export default function CalendarPage() {
         <CardContent>
           <div className="space-y-4">
             {events
-              .filter(event => 
-                event.date.toDateString() === date.toDateString()
+              .filter(
+                (event) => event.date.toDateString() === date.toDateString()
               )
-              .map(event => (
+              .map((event) => (
                 <Card key={event.id}>
                   <CardHeader className="py-3">
                     <div className="flex justify-between items-center">
                       <CardTitle className="text-base">{event.title}</CardTitle>
                       <div className="flex gap-2">
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
                           onClick={() => setSelectedEvent(event)}
                         >
                           <Edit2 className="w-4 h-4" />
                         </Button>
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
                           onClick={() => handleDeleteEvent(event.id)}
                         >
@@ -172,11 +192,15 @@ export default function CalendarPage() {
                   <CardContent>
                     <p className="text-sm text-gray-500">{event.description}</p>
                     <div className="mt-2">
-                      <span className={`text-xs px-2 py-1 rounded-full ${
-                        event.type === 'meeting' ? 'bg-blue-100 text-blue-800' :
-                        event.type === 'followup' ? 'bg-green-100 text-green-800' :
-                        'bg-red-100 text-red-800'
-                      }`}>
+                      <span
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          event.type === "meeting"
+                            ? "bg-blue-100 text-blue-800"
+                            : event.type === "followup"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
+                      >
                         {event.type}
                       </span>
                     </div>
@@ -219,5 +243,5 @@ export default function CalendarPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

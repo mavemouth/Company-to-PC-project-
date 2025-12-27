@@ -1,37 +1,37 @@
-﻿"use client"
+﻿"use client";
 
-import { useEffect, useState } from "react"
-import { useRouter, usePathname } from "next/navigation"
-import { useUser } from "@/components/user-context"
-import { Sidebar } from "@/components/sidebar"
-import { Bell } from "lucide-react"
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useUser } from "components/user-context";
+import { Sidebar } from "@/components/sidebar";
+import { Bell } from "lucide-react";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { user } = useUser()
-  const router = useRouter()
-  const pathname = usePathname()
-  const [mounted, setMounted] = useState(false)
+  const { user } = useUser();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (mounted && pathname === "/login") {
       // Allow login page
-      return
+      return;
     }
     // For all other pages, show the dashboard without authentication check
-  }, [mounted, pathname])
+  }, [mounted, pathname]);
 
   if (!mounted) {
-    return null
+    return null;
   }
 
   if (pathname === "/login") {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
   // Always show dashboard content without authentication check
-  return <>{children}</>
+  return <>{children}</>;
 }

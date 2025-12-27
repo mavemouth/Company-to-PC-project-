@@ -3,15 +3,27 @@
 import type React from "react"
 
 import { useState, useCallback } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "components/ui/card"
+import { Input } from "components/ui/input"
+import { Label } from "components/ui/label"
+import { Textarea } from "components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "components/ui/select"
+import { Checkbox } from "components/ui/checkbox"
+import { Badge } from "components/ui/badge"
+import { Separator } from "components/ui/separator"
 import {
   Upload,
   Building2,
@@ -24,8 +36,8 @@ import {
   Copy,
   CalendarIcon,
 } from "lucide-react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar as UICalendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "components/ui/popover"
+import { Calendar as UICalendar } from "components/ui/calendar"
 
 interface JobDescription {
   id: string
@@ -59,7 +71,9 @@ interface CampusVisit {
 }
 
 export default function HiringForm() {
-  const [hrContacts, setHrContacts] = useState<HrContact[]>([{ id: "hr-1", name: "", email: "", phone: "" }])
+  const [hrContacts, setHrContacts] = useState<HrContact[]>([
+    { id: "hr-1", name: "", email: "", phone: "" },
+  ])
   const [jobDescriptions, setJobDescriptions] = useState<JobDescription[]>([
     {
       id: "jd-1",
@@ -79,7 +93,9 @@ export default function HiringForm() {
       eligibleBatches: [],
     },
   ])
-  const [hiringStages, setHiringStages] = useState<{ stage: string; mode: string }[]>([
+  const [hiringStages, setHiringStages] = useState<
+    { stage: string; mode: string }[]
+  >([
     { stage: "Online Assessment", mode: "online" },
     { stage: "", mode: "online" },
     { stage: "", mode: "online" },
@@ -90,7 +106,10 @@ export default function HiringForm() {
   ])
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
-  const [submitResponse, setSubmitResponse] = useState<{ email: string; password: string } | null>(null)
+  const [submitResponse, setSubmitResponse] = useState<{
+    email: string
+    password: string
+  } | null>(null)
 
   // Enhanced dummy date data with more variety
   const unavailableDates = [
@@ -142,7 +161,10 @@ export default function HiringForm() {
           "Computer Science and Business Systems (CSBS)",
           "Artificial Intelligence and Machine Learning (A.I/M.L)",
         ],
-        "M.Tech": ["Computer Science Engineering (CSE)", "Artificial Intelligence"],
+        "M.Tech": [
+          "Computer Science Engineering (CSE)",
+          "Artificial Intelligence",
+        ],
         "Ph.D": ["Computer Science Engineering"],
       },
     },
@@ -153,8 +175,15 @@ export default function HiringForm() {
       textColor: "text-red-800",
       borderColor: "border-red-200",
       degrees: {
-        "B.Tech": ["Mechanical Engineering (Mech. Eng.)", "Mechatronics", "Robotics and A.I (RAI)"],
-        "M.Tech": ["Mechanical Engineering (specialization with CAD/CAM)", "Flexi Timings Mode"],
+        "B.Tech": [
+          "Mechanical Engineering (Mech. Eng.)",
+          "Mechatronics",
+          "Robotics and A.I (RAI)",
+        ],
+        "M.Tech": [
+          "Mechanical Engineering (specialization with CAD/CAM)",
+          "Flexi Timings Mode",
+        ],
         "Ph.D": ["Mechanical Engineering"],
       },
     },
@@ -198,7 +227,10 @@ export default function HiringForm() {
       textColor: "text-blue-800",
       borderColor: "border-blue-200",
       degrees: {
-        "B.Tech": ["Civil Engineering (CE)", "Civil Engineering with Computer Applications (CCA)"],
+        "B.Tech": [
+          "Civil Engineering (CE)",
+          "Civil Engineering with Computer Applications (CCA)",
+        ],
         "M.Tech": ["Structural Engineering", "Transportation Engineering"],
         "Ph.D": ["Civil Engineering"],
       },
@@ -253,7 +285,10 @@ export default function HiringForm() {
       borderColor: "border-emerald-200",
       degrees: {
         "M.Tech": ["Environmental Science and Technology"],
-        "PG Programs": ["Energy Management and Climate Action", "Waste Management and Resource Recovery"],
+        "PG Programs": [
+          "Energy Management and Climate Action",
+          "Waste Management and Resource Recovery",
+        ],
       },
     },
     {
@@ -352,7 +387,12 @@ export default function HiringForm() {
   ]
 
   // Allow duplicate stages - removed filtering
-  const availableStages = ["Online Assessment", "Technical Interview", "HR Interview", "Final Interview"]
+  const availableStages = [
+    "Online Assessment",
+    "Technical Interview",
+    "HR Interview",
+    "Final Interview",
+  ]
 
   // Updated degree options to match the image
   const degreeOptions = [
@@ -390,12 +430,17 @@ export default function HiringForm() {
     })
 
     return allDepartments.filter((dept) =>
-      selectedDegreeTypes.some((degreeType) => Object.keys(dept.degrees).includes(degreeType)),
+      selectedDegreeTypes.some((degreeType) =>
+        Object.keys(dept.degrees).includes(degreeType)
+      )
     )
   }
 
   const addHrContact = () => {
-    setHrContacts([...hrContacts, { id: `hr-${Date.now()}`, name: "", email: "", phone: "" }])
+    setHrContacts([
+      ...hrContacts,
+      { id: `hr-${Date.now()}`, name: "", email: "", phone: "" },
+    ])
   }
 
   const removeHrContact = (id: string) => {
@@ -404,8 +449,16 @@ export default function HiringForm() {
     }
   }
 
-  const updateHrContact = (id: string, field: keyof HrContact, value: string) => {
-    setHrContacts(hrContacts.map((contact) => (contact.id === id ? { ...contact, [field]: value } : contact)))
+  const updateHrContact = (
+    id: string,
+    field: keyof HrContact,
+    value: string
+  ) => {
+    setHrContacts(
+      hrContacts.map((contact) =>
+        contact.id === id ? { ...contact, [field]: value } : contact
+      )
+    )
   }
 
   const addJobDescription = (sourceJD?: JobDescription) => {
@@ -441,13 +494,25 @@ export default function HiringForm() {
     }
   }
 
-  const updateJobDescription = (id: string, field: keyof JobDescription, value: any) => {
-    setJobDescriptions(jobDescriptions.map((jd) => (jd.id === id ? { ...jd, [field]: value } : jd)))
+  const updateJobDescription = (
+    id: string,
+    field: keyof JobDescription,
+    value: any
+  ) => {
+    setJobDescriptions(
+      jobDescriptions.map((jd) =>
+        jd.id === id ? { ...jd, [field]: value } : jd
+      )
+    )
   }
 
   const addDegreePreference = (jdId: string) => {
     setJobDescriptions(
-      jobDescriptions.map((jd) => (jd.id === jdId ? { ...jd, degreePreferences: [...jd.degreePreferences, ""] } : jd)),
+      jobDescriptions.map((jd) =>
+        jd.id === jdId
+          ? { ...jd, degreePreferences: [...jd.degreePreferences, ""] }
+          : jd
+      )
     )
   }
 
@@ -457,61 +522,77 @@ export default function HiringForm() {
         jd.id === jdId
           ? {
               ...jd,
-              degreePreferences: jd.degreePreferences.filter((_, i) => i !== index),
+              degreePreferences: jd.degreePreferences.filter(
+                (_, i) => i !== index
+              ),
               // Clear departments when degree preferences change
               eligibleDepartments: [],
               expandedDepartments: [],
             }
-          : jd,
-      ),
+          : jd
+      )
     )
   }
 
-  const updateDegreePreference = (jdId: string, index: number, value: string) => {
+  const updateDegreePreference = (
+    jdId: string,
+    index: number,
+    value: string
+  ) => {
     setJobDescriptions(
       jobDescriptions.map((jd) =>
         jd.id === jdId
           ? {
               ...jd,
-              degreePreferences: jd.degreePreferences.map((pref, i) => (i === index ? value : pref)),
+              degreePreferences: jd.degreePreferences.map((pref, i) =>
+                i === index ? value : pref
+              ),
               // Clear departments when degree preferences change
               eligibleDepartments: [],
               expandedDepartments: [],
             }
-          : jd,
-      ),
+          : jd
+      )
     )
   }
 
   // This now toggles specializations
-  const toggleSpecialization = useCallback((jdId: string, specialization: string) => {
-    setJobDescriptions((prevJDs) =>
-      prevJDs.map((jd) => {
-        if (jd.id === jdId) {
-          const updatedSpecializations = jd.eligibleDepartments.includes(specialization)
-            ? jd.eligibleDepartments.filter((s) => s !== specialization)
-            : [...jd.eligibleDepartments, specialization]
-          return { ...jd, eligibleDepartments: updatedSpecializations }
-        }
-        return jd
-      }),
-    )
-  }, [])
+  const toggleSpecialization = useCallback(
+    (jdId: string, specialization: string) => {
+      setJobDescriptions((prevJDs) =>
+        prevJDs.map((jd) => {
+          if (jd.id === jdId) {
+            const updatedSpecializations = jd.eligibleDepartments.includes(
+              specialization
+            )
+              ? jd.eligibleDepartments.filter((s) => s !== specialization)
+              : [...jd.eligibleDepartments, specialization]
+            return { ...jd, eligibleDepartments: updatedSpecializations }
+          }
+          return jd
+        })
+      )
+    },
+    []
+  )
 
   // This toggles the expansion of the main department
-  const toggleDepartmentExpansion = useCallback((jdId: string, deptName: string) => {
-    setJobDescriptions((prevJDs) =>
-      prevJDs.map((jd) => {
-        if (jd.id === jdId) {
-          const updatedExpanded = jd.expandedDepartments.includes(deptName)
-            ? jd.expandedDepartments.filter((d) => d !== deptName)
-            : [...jd.expandedDepartments, deptName]
-          return { ...jd, expandedDepartments: updatedExpanded }
-        }
-        return jd
-      }),
-    )
-  }, [])
+  const toggleDepartmentExpansion = useCallback(
+    (jdId: string, deptName: string) => {
+      setJobDescriptions((prevJDs) =>
+        prevJDs.map((jd) => {
+          if (jd.id === jdId) {
+            const updatedExpanded = jd.expandedDepartments.includes(deptName)
+              ? jd.expandedDepartments.filter((d) => d !== deptName)
+              : [...jd.expandedDepartments, deptName]
+            return { ...jd, expandedDepartments: updatedExpanded }
+          }
+          return jd
+        })
+      )
+    },
+    []
+  )
 
   const toggleBatch = useCallback((jdId: string, batch: string) => {
     setJobDescriptions((prevJDs) =>
@@ -523,14 +604,21 @@ export default function HiringForm() {
           return { ...jd, eligibleBatches: updatedBatches }
         }
         return jd
-      }),
+      })
     )
   }, [])
 
-  const updateHiringStage = (index: number, field: "stage" | "mode", value: string) => {
+  const updateHiringStage = (
+    index: number,
+    field: "stage" | "mode",
+    value: string
+  ) => {
     const newStages = [...hiringStages]
     if (field === "stage") {
-      newStages[index] = { ...newStages[index], stage: value === "none" ? "" : value }
+      newStages[index] = {
+        ...newStages[index],
+        stage: value === "none" ? "" : value,
+      }
     } else {
       newStages[index] = { ...newStages[index], mode: value }
     }
@@ -538,11 +626,16 @@ export default function HiringForm() {
   }
 
   const addHiringStage = () => {
-    setHiringStages((prevStages) => [...prevStages, { stage: "", mode: "online" }])
+    setHiringStages((prevStages) => [
+      ...prevStages,
+      { stage: "", mode: "online" },
+    ])
   }
 
   const removeHiringStage = (indexToRemove: number) => {
-    setHiringStages((prevStages) => prevStages.filter((_, index) => index !== indexToRemove))
+    setHiringStages((prevStages) =>
+      prevStages.filter((_, index) => index !== indexToRemove)
+    )
   }
 
   // Removed filtering - now allows duplicate stages
@@ -553,7 +646,11 @@ export default function HiringForm() {
   const addCampusVisit = () => {
     setCampusVisits([
       ...campusVisits,
-      { id: `visit-${Date.now()}`, startDate: undefined, stageName: `Campus Visit Phase ${campusVisits.length + 1}` },
+      {
+        id: `visit-${Date.now()}`,
+        startDate: undefined,
+        stageName: `Campus Visit Phase ${campusVisits.length + 1}`,
+      },
     ])
   }
 
@@ -563,8 +660,16 @@ export default function HiringForm() {
     }
   }
 
-  const updateCampusVisit = (id: string, field: keyof CampusVisit, value: Date | undefined | string) => {
-    setCampusVisits(campusVisits.map((visit) => (visit.id === id ? { ...visit, [field]: value } : visit)))
+  const updateCampusVisit = (
+    id: string,
+    field: keyof CampusVisit,
+    value: Date | undefined | string
+  ) => {
+    setCampusVisits(
+      campusVisits.map((visit) =>
+        visit.id === id ? { ...visit, [field]: value } : visit
+      )
+    )
   }
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -588,105 +693,123 @@ export default function HiringForm() {
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     // Validate form data before submission
     if (hrContacts.length === 0 || !hrContacts[0].email) {
-      alert('Please add at least one HR contact with email');
-      return;
+      alert("Please add at least one HR contact with email")
+      return
     }
 
     if (jobDescriptions.length === 0) {
-      alert('Please add at least one job description');
-      return;
+      alert("Please add at least one job description")
+      return
     }
-    
+
     try {
-      const formData = new FormData();
-      
+      const formData = new FormData()
+
       // Add all uploaded files
       uploadedFiles.forEach((file) => {
-        formData.append("files", file);
-      });
+        formData.append("files", file)
+      })
 
       // Prepare the form data
       const submissionData = {
         hrContacts,
         jobDescriptions,
-        hiringStages: hiringStages.filter(stage => stage.stage !== ""), // Only include non-empty stages
-        campusVisits: campusVisits.map(visit => ({
+        hiringStages: hiringStages.filter((stage) => stage.stage !== ""), // Only include non-empty stages
+        campusVisits: campusVisits.map((visit) => ({
           ...visit,
-          startDate: visit.startDate ? visit.startDate.toISOString() : null
-        }))
-      };
+          startDate: visit.startDate ? visit.startDate.toISOString() : null,
+        })),
+      }
 
       // Add the JSON data
-      formData.append("formData", JSON.stringify(submissionData));
+      formData.append("formData", JSON.stringify(submissionData))
 
-      console.log("Submitting form data:", submissionData); // Log the data being sent
+      console.log("Submitting form data:", submissionData) // Log the data being sent
 
       const res = await fetch("http://localhost:5000/api/submit", {
         method: "POST",
         body: formData,
         headers: {
-          'Accept': 'application/json',
+          Accept: "application/json",
         },
-      });
+      })
 
-      console.log("Response status:", res.status); // Log the response status
+      console.log("Response status:", res.status) // Log the response status
 
-      const data = await res.json();
-      console.log("Response data:", data); // Log the response data
+      const data = await res.json()
+      console.log("Response data:", data) // Log the response data
 
       if (res.ok && data.success) {
-        console.log("✅ Success:", data);
+        console.log("✅ Success:", data)
         // Set the response data for display
         setSubmitResponse({
           email: data.credentials.email,
-          password: data.credentials.password
-        });
+          password: data.credentials.password,
+        })
 
         // Reset all form states
-        setHrContacts([{ id: "hr-1", name: "", email: "", phone: "" }]);
-        setJobDescriptions([{
-          id: "jd-1",
-          title: "",
-          type: "internship",
-          internshipDuration: "",
-          conditions: "",
-          openings: "",
-          skills: "",
-          degreePreferences: [""],
-          ctc: "",
-          stipend: "",
-          allowances: "",
-          cutoff: "",
-          eligibleDepartments: [],
-          expandedDepartments: [],
-          eligibleBatches: [],
-        }]);
+        setHrContacts([{ id: "hr-1", name: "", email: "", phone: "" }])
+        setJobDescriptions([
+          {
+            id: "jd-1",
+            title: "",
+            type: "internship",
+            internshipDuration: "",
+            conditions: "",
+            openings: "",
+            skills: "",
+            degreePreferences: [""],
+            ctc: "",
+            stipend: "",
+            allowances: "",
+            cutoff: "",
+            eligibleDepartments: [],
+            expandedDepartments: [],
+            eligibleBatches: [],
+          },
+        ])
         setHiringStages([
           { stage: "Online Assessment", mode: "online" },
           { stage: "", mode: "online" },
           { stage: "", mode: "online" },
-        ]);
-        setCampusVisits([{ id: "visit-1", startDate: undefined, stageName: "Campus Visit Phase 1" }]);
-        setUploadedFiles([]);
-        setIsSubmitted(true);
+        ])
+        setCampusVisits([
+          {
+            id: "visit-1",
+            startDate: undefined,
+            stageName: "Campus Visit Phase 1",
+          },
+        ])
+        setUploadedFiles([])
+        setIsSubmitted(true)
 
         // Store the dashboard URL for redirection
         if (data.credentials.dashboardUrl) {
-          window.localStorage.setItem('dashboardRedirectUrl', data.credentials.dashboardUrl);
+          window.localStorage.setItem(
+            "dashboardRedirectUrl",
+            data.credentials.dashboardUrl
+          )
         }
       } else {
-        console.error("❌ Error:", data);
-        alert(`Error submitting form: ${data.error || data.message || 'Unknown error'}`);
+        console.error("❌ Error:", data)
+        alert(
+          `Error submitting form: ${
+            data.error || data.message || "Unknown error"
+          }`
+        )
       }
     } catch (err) {
-      console.error("❌ Network Error:", err);
-      alert(`Failed to submit form: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      console.error("❌ Network Error:", err)
+      alert(
+        `Failed to submit form: ${
+          err instanceof Error ? err.message : "Unknown error"
+        }`
+      )
     }
-
   }
 
   return (
@@ -695,28 +818,38 @@ export default function HiringForm() {
       {isSubmitted && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-300">
           <div className="bg-white rounded-xl p-8 max-w-md mx-4 text-center shadow-2xl animate-in zoom-in-95 duration-500">
-            <h2 className="text-2xl font-bold text-green-600 mb-2">Form Successfully Submitted!</h2>
+            <h2 className="text-2xl font-bold text-green-600 mb-2">
+              Form Successfully Submitted!
+            </h2>
             <p className="text-slate-600 mb-4">
-              Your hiring request has been submitted successfully. Please use the credentials below to access your dashboard.
+              Your hiring request has been submitted successfully. Please use
+              the credentials below to access your dashboard.
             </p>
             <div className="bg-blue-50 p-4 rounded-lg mb-4 text-left">
-              <h3 className="font-semibold text-blue-800 mb-2">Your Dashboard Credentials:</h3>
+              <h3 className="font-semibold text-blue-800 mb-2">
+                Your Dashboard Credentials:
+              </h3>
               <p className="text-blue-700 mb-1">
-                <strong>Email:</strong> <span id="hr-email">{submitResponse?.email}</span>
+                <strong>Email:</strong>{" "}
+                <span id="hr-email">{submitResponse?.email}</span>
               </p>
               <p className="text-blue-700 mb-2">
-                <strong>Password:</strong> <span id="hr-password">{submitResponse?.password}</span>
+                <strong>Password:</strong>{" "}
+                <span id="hr-password">{submitResponse?.password}</span>
               </p>
               <p className="text-sm text-blue-600">
-                Please save these credentials securely. You'll need them to access your dashboard.
+                Please save these credentials securely. You'll need them to
+                access your dashboard.
               </p>
             </div>
-            <Button 
+            <Button
               onClick={() => {
-                const dashboardUrl = window.localStorage.getItem('dashboardRedirectUrl') || 'http://localhost:3003/login';
-                window.localStorage.removeItem('dashboardRedirectUrl'); // Clean up
-                window.location.href = dashboardUrl;
-              }} 
+                const dashboardUrl =
+                  window.localStorage.getItem("dashboardRedirectUrl") ||
+                  "http://localhost:3003/login"
+                window.localStorage.removeItem("dashboardRedirectUrl") // Clean up
+                window.location.href = dashboardUrl
+              }}
               className="bg-green-600 hover:bg-green-700 text-white"
             >
               Go to Dashboard Login
@@ -728,9 +861,15 @@ export default function HiringForm() {
         {/* Logo and Hiring Request title */}
         <div className="mb-8 text-center">
           <div className="mb-6 flex items-center justify-center">
-            <img src="/images/tiet-logo-full.png" alt="Thapar Institute of Engineering & Technology" className="h-24" />
+            <img
+              src="/images/tiet-logo-full.png"
+              alt="Thapar Institute of Engineering & Technology"
+              className="h-24"
+            />
           </div>
-          <h1 className="mb-2 text-4xl font-bold tracking-tight text-slate-900">Hiring Request</h1>
+          <h1 className="mb-2 text-4xl font-bold tracking-tight text-slate-900">
+            Hiring Request
+          </h1>
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -741,12 +880,17 @@ export default function HiringForm() {
                 <Building2 className="h-5 w-5" />
                 Company Information *
               </CardTitle>
-              <CardDescription className="text-blue-100">Tell us about your organization</CardDescription>
+              <CardDescription className="text-blue-100">
+                Tell us about your organization
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
               <div className="grid gap-6 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="company-name" className="text-sm font-semibold text-slate-700">
+                  <Label
+                    htmlFor="company-name"
+                    className="text-sm font-semibold text-slate-700"
+                  >
                     Company Name *
                   </Label>
                   <Input
@@ -761,7 +905,10 @@ export default function HiringForm() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="website" className="text-sm font-semibold text-slate-700">
+                  <Label
+                    htmlFor="website"
+                    className="text-sm font-semibold text-slate-700"
+                  >
                     Company Website *
                   </Label>
                   <Input
@@ -778,7 +925,10 @@ export default function HiringForm() {
                 </div>
                 {/* New Location Row */}
                 <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="location" className="text-sm font-semibold text-slate-700">
+                  <Label
+                    htmlFor="location"
+                    className="text-sm font-semibold text-slate-700"
+                  >
                     Company Location *
                   </Label>
                   <Input
@@ -794,9 +944,15 @@ export default function HiringForm() {
                 </div>
 
                 {hrContacts.map((contact, index) => (
-                  <div key={contact.id} className="grid gap-6 md:col-span-2 md:grid-cols-3">
+                  <div
+                    key={contact.id}
+                    className="grid gap-6 md:col-span-2 md:grid-cols-3"
+                  >
                     <div className="space-y-2">
-                      <Label htmlFor={`hr-name-${contact.id}`} className="text-sm font-semibold text-slate-700">
+                      <Label
+                        htmlFor={`hr-name-${contact.id}`}
+                        className="text-sm font-semibold text-slate-700"
+                      >
                         HR Contact Name {index === 0 ? "*" : ""}
                       </Label>
                       <Input
@@ -804,7 +960,11 @@ export default function HiringForm() {
                         placeholder="Enter HR name"
                         value={contact.name}
                         onChange={(e) =>
-                          updateHrContact(contact.id, "name", e.target.value.replace(/[^a-zA-Z\s]/g, ""))
+                          updateHrContact(
+                            contact.id,
+                            "name",
+                            e.target.value.replace(/[^a-zA-Z\s]/g, "")
+                          )
                         }
                         className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                         onKeyDown={(e) => {
@@ -815,7 +975,10 @@ export default function HiringForm() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor={`hr-email-${contact.id}`} className="text-sm font-semibold text-slate-700">
+                      <Label
+                        htmlFor={`hr-email-${contact.id}`}
+                        className="text-sm font-semibold text-slate-700"
+                      >
                         HR Email {index === 0 ? "*" : ""}
                       </Label>
                       <Input
@@ -823,7 +986,9 @@ export default function HiringForm() {
                         type="email"
                         placeholder="hr@company.com"
                         value={contact.email}
-                        onChange={(e) => updateHrContact(contact.id, "email", e.target.value)}
+                        onChange={(e) =>
+                          updateHrContact(contact.id, "email", e.target.value)
+                        }
                         className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -834,7 +999,10 @@ export default function HiringForm() {
                     </div>
                     <div className="space-y-2 flex items-end gap-2">
                       <div className="flex-1 space-y-2">
-                        <Label htmlFor={`hr-phone-${contact.id}`} className="text-sm font-semibold text-slate-700">
+                        <Label
+                          htmlFor={`hr-phone-${contact.id}`}
+                          className="text-sm font-semibold text-slate-700"
+                        >
                           HR Phone Number
                         </Label>
                         <Input
@@ -842,7 +1010,9 @@ export default function HiringForm() {
                           type="tel"
                           placeholder="Enter official phone number"
                           value={contact.phone}
-                          onChange={(e) => updateHrContact(contact.id, "phone", e.target.value)}
+                          onChange={(e) =>
+                            updateHrContact(contact.id, "phone", e.target.value)
+                          }
                           className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
@@ -883,12 +1053,17 @@ export default function HiringForm() {
           {/* Job Descriptions */}
           <div className="space-y-4">
             {jobDescriptions.map((jd, index) => (
-              <Card key={jd.id} className="border-0 shadow-lg shadow-slate-200/50 rounded-xl">
+              <Card
+                key={jd.id}
+                className="border-0 shadow-lg shadow-slate-200/50 rounded-xl"
+              >
                 <CardHeader className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-t-xl">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <FileText className="h-5 w-5" />
-                      <CardTitle className="text-xl">Job Description {index + 1} *</CardTitle>
+                      <CardTitle className="text-xl">
+                        Job Description {index + 1} *
+                      </CardTitle>
                     </div>
                     {jobDescriptions.length > 1 && (
                       <Button
@@ -902,20 +1077,27 @@ export default function HiringForm() {
                       </Button>
                     )}
                   </div>
-                  <CardDescription className="text-emerald-100">Specify the role and requirements</CardDescription>
+                  <CardDescription className="text-emerald-100">
+                    Specify the role and requirements
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="grid gap-6 md:grid-cols-2">
                     {/* Job Title and Job Type on same row (swapped positions) */}
                     <div className="space-y-2">
-                      <Label htmlFor={`job-title-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                      <Label
+                        htmlFor={`job-title-${jd.id}`}
+                        className="text-sm font-semibold text-slate-700"
+                      >
                         Job Title *
                       </Label>
                       <Input
                         id={`job-title-${jd.id}`}
                         placeholder="e.g., Software Engineer"
                         value={jd.title}
-                        onChange={(e) => updateJobDescription(jd.id, "title", e.target.value)}
+                        onChange={(e) =>
+                          updateJobDescription(jd.id, "title", e.target.value)
+                        }
                         className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
@@ -926,22 +1108,36 @@ export default function HiringForm() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-sm font-semibold text-slate-700">Job Type *</Label>
-                      <Select value={jd.type} onValueChange={(value) => updateJobDescription(jd.id, "type", value)}>
+                      <Label className="text-sm font-semibold text-slate-700">
+                        Job Type *
+                      </Label>
+                      <Select
+                        value={jd.type}
+                        onValueChange={(value) =>
+                          updateJobDescription(jd.id, "type", value)
+                        }
+                      >
                         <SelectTrigger className="border-slate-300 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue placeholder="Select job type" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="internship">Internship</SelectItem>
                           <SelectItem value="full-time">Full Time</SelectItem>
-                          <SelectItem value="internship-fulltime">Internship + Full Time</SelectItem>
-                          <SelectItem value="internship-ppo">Internship + Pre-Placement Offer (PPO)</SelectItem>
+                          <SelectItem value="internship-fulltime">
+                            Internship + Full Time
+                          </SelectItem>
+                          <SelectItem value="internship-ppo">
+                            Internship + Pre-Placement Offer (PPO)
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor={`openings-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                      <Label
+                        htmlFor={`openings-${jd.id}`}
+                        className="text-sm font-semibold text-slate-700"
+                      >
                         Number of Openings
                       </Label>
                       <Input
@@ -949,7 +1145,13 @@ export default function HiringForm() {
                         type="number"
                         placeholder="e.g., 5"
                         value={jd.openings}
-                        onChange={(e) => updateJobDescription(jd.id, "openings", e.target.value)}
+                        onChange={(e) =>
+                          updateJobDescription(
+                            jd.id,
+                            "openings",
+                            e.target.value
+                          )
+                        }
                         onKeyPress={(e) => {
                           if (!/[0-9]/.test(e.key)) {
                             e.preventDefault()
@@ -965,7 +1167,8 @@ export default function HiringForm() {
                     </div>
 
                     {/* Internship Duration - Only show for "internship" and "internship-ppo" */}
-                    {(jd.type === "internship" || jd.type === "internship-ppo") && (
+                    {(jd.type === "internship" ||
+                      jd.type === "internship-ppo") && (
                       <div className="space-y-2">
                         <Label
                           htmlFor={`internship-duration-${jd.id}`}
@@ -984,9 +1187,17 @@ export default function HiringForm() {
                             onChange={(e) => {
                               const val = Number.parseInt(e.target.value)
                               if (!isNaN(val) && val >= 1 && val <= 12) {
-                                updateJobDescription(jd.id, "internshipDuration", e.target.value)
+                                updateJobDescription(
+                                  jd.id,
+                                  "internshipDuration",
+                                  e.target.value
+                                )
                               } else if (e.target.value === "") {
-                                updateJobDescription(jd.id, "internshipDuration", "")
+                                updateJobDescription(
+                                  jd.id,
+                                  "internshipDuration",
+                                  ""
+                                )
                               }
                             }}
                             className="w-20 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
@@ -996,13 +1207,18 @@ export default function HiringForm() {
                               }
                             }}
                           />
-                          <span className="text-sm text-slate-600">month(s)</span>
+                          <span className="text-sm text-slate-600">
+                            month(s)
+                          </span>
                         </div>
                       </div>
                     )}
 
                     <div className="space-y-2">
-                      <Label htmlFor={`cutoff-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                      <Label
+                        htmlFor={`cutoff-${jd.id}`}
+                        className="text-sm font-semibold text-slate-700"
+                      >
                         Cut-off Preference (CGPA) *
                       </Label>
                       <div className="flex items-center gap-2">
@@ -1017,7 +1233,11 @@ export default function HiringForm() {
                           onChange={(e) => {
                             const val = Number.parseFloat(e.target.value)
                             if (!isNaN(val) && val >= 0 && val <= 10) {
-                              updateJobDescription(jd.id, "cutoff", e.target.value)
+                              updateJobDescription(
+                                jd.id,
+                                "cutoff",
+                                e.target.value
+                              )
                             } else if (e.target.value === "") {
                               updateJobDescription(jd.id, "cutoff", "")
                             }
@@ -1029,19 +1249,30 @@ export default function HiringForm() {
                             }
                           }}
                         />
-                        <span className="text-sm text-slate-600">and above</span>
+                        <span className="text-sm text-slate-600">
+                          and above
+                        </span>
                       </div>
                     </div>
 
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor={`job-conditions-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                      <Label
+                        htmlFor={`job-conditions-${jd.id}`}
+                        className="text-sm font-semibold text-slate-700"
+                      >
                         Job Conditions & Requirements *
                       </Label>
                       <Textarea
                         id={`job-conditions-${jd.id}`}
                         placeholder="e.g., Work from office, 6 months internship with possibility of full-time conversion, flexible working hours, travel requirements, etc."
                         value={jd.conditions}
-                        onChange={(e) => updateJobDescription(jd.id, "conditions", e.target.value)}
+                        onChange={(e) =>
+                          updateJobDescription(
+                            jd.id,
+                            "conditions",
+                            e.target.value
+                          )
+                        }
                         className="min-h-[60px] border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                       />
                     </div>
@@ -1049,10 +1280,15 @@ export default function HiringForm() {
                     {/* Multi-Eligibility Batch Student Criteria */}
                     <div className="md:col-span-2">
                       <Separator className="my-4" />
-                      <h4 className="text-lg font-semibold text-slate-800 mb-4">Eligible Student Batches *</h4>
+                      <h4 className="text-lg font-semibold text-slate-800 mb-4">
+                        Eligible Student Batches *
+                      </h4>
                       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                         {["2024", "2025", "2026", "2027"].map((batch) => (
-                          <div key={batch} className="flex items-center space-x-2">
+                          <div
+                            key={batch}
+                            className="flex items-center space-x-2"
+                          >
                             <Checkbox
                               id={`batch-${jd.id}-${batch}`}
                               checked={jd.eligibleBatches.includes(batch)}
@@ -1071,14 +1307,19 @@ export default function HiringForm() {
                     </div>
 
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor={`skills-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                      <Label
+                        htmlFor={`skills-${jd.id}`}
+                        className="text-sm font-semibold text-slate-700"
+                      >
                         Required Skills *
                       </Label>
                       <Textarea
                         id={`skills-${jd.id}`}
                         placeholder="e.g., JavaScript, React, Node.js, Python, Machine Learning..."
                         value={jd.skills}
-                        onChange={(e) => updateJobDescription(jd.id, "skills", e.target.value)}
+                        onChange={(e) =>
+                          updateJobDescription(jd.id, "skills", e.target.value)
+                        }
                         className="min-h-[80px] border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                       />
                     </div>
@@ -1086,20 +1327,30 @@ export default function HiringForm() {
                     {/* Degree Preference Section - Moved below skills */}
                     <div className="md:col-span-2">
                       <Separator className="my-4" />
-                      <h4 className="text-lg font-semibold text-slate-800 mb-4">Degree Preference(s) *</h4>
+                      <h4 className="text-lg font-semibold text-slate-800 mb-4">
+                        Degree Preference(s) *
+                      </h4>
                       <div className="space-y-4">
                         {jd.degreePreferences.map((preference, prefIndex) => (
-                          <div key={prefIndex} className="flex items-center gap-2">
+                          <div
+                            key={prefIndex}
+                            className="flex items-center gap-2"
+                          >
                             <Select
                               value={preference}
-                              onValueChange={(value) => updateDegreePreference(jd.id, prefIndex, value)}
+                              onValueChange={(value) =>
+                                updateDegreePreference(jd.id, prefIndex, value)
+                              }
                             >
                               <SelectTrigger className="border-slate-300 focus:border-blue-500 focus:ring-blue-500">
                                 <SelectValue placeholder="Select preferred degree" />
                               </SelectTrigger>
                               <SelectContent>
                                 {degreeOptions.map((option) => (
-                                  <SelectItem key={option.value} value={option.value}>
+                                  <SelectItem
+                                    key={option.value}
+                                    value={option.value}
+                                  >
                                     {option.label}
                                   </SelectItem>
                                 ))}
@@ -1110,7 +1361,9 @@ export default function HiringForm() {
                                 type="button"
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => removeDegreePreference(jd.id, prefIndex)}
+                                onClick={() =>
+                                  removeDegreePreference(jd.id, prefIndex)
+                                }
                                 className="text-red-500 hover:text-red-700"
                               >
                                 <Trash2 className="h-4 w-4" />
@@ -1131,14 +1384,21 @@ export default function HiringForm() {
                         </Button>
 
                         {/* Selected Degree Preferences Display */}
-                        {jd.degreePreferences.filter((pref) => pref !== "").length > 0 && (
+                        {jd.degreePreferences.filter((pref) => pref !== "")
+                          .length > 0 && (
                           <div className="mt-3 flex flex-wrap gap-2">
                             {jd.degreePreferences
                               .filter((pref) => pref !== "")
                               .map((pref, index) => {
-                                const degreeOption = degreeOptions.find((opt) => opt.value === pref)
+                                const degreeOption = degreeOptions.find(
+                                  (opt) => opt.value === pref
+                                )
                                 return (
-                                  <Badge key={index} variant="secondary" className="bg-blue-100 text-blue-800">
+                                  <Badge
+                                    key={index}
+                                    variant="secondary"
+                                    className="bg-blue-100 text-blue-800"
+                                  >
                                     {degreeOption?.label || pref}
                                   </Badge>
                                 )
@@ -1151,16 +1411,20 @@ export default function HiringForm() {
                     {/* Eligible Departments - Now filtered based on degree preferences */}
                     <div className="md:col-span-2">
                       <Separator className="my-4" />
-                      <h4 className="text-lg font-semibold text-slate-800 mb-4">Eligible Departments & Schools *</h4>
+                      <h4 className="text-lg font-semibold text-slate-800 mb-4">
+                        Eligible Departments & Schools *
+                      </h4>
 
-                      {jd.degreePreferences.filter((pref) => pref !== "").length === 0 ? (
+                      {jd.degreePreferences.filter((pref) => pref !== "")
+                        .length === 0 ? (
                         <div className="p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border-2 border-yellow-200">
                           <div className="text-center">
                             <h5 className="text-lg font-semibold text-amber-800 mb-2">
                               Please select a degree preference first
                             </h5>
                             <p className="text-amber-700">
-                              Choose your preferred degree type above to see eligible departments and schools
+                              Choose your preferred degree type above to see
+                              eligible departments and schools
                             </p>
                           </div>
                         </div>
@@ -1168,108 +1432,147 @@ export default function HiringForm() {
                         <div className="space-y-6">
                           {/* Department List - 3 per row with colored boxes */}
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {getFilteredDepartments(jd.degreePreferences).map((dept) => (
-                              <div key={dept.name} className="space-y-2">
-                                {/* Department Box - Colored like the image */}
-                                <div
-                                  className={`${dept.bgColor} ${dept.borderColor} ${dept.textColor} border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 hover:shadow-md hover:scale-[1.02]`}
-                                  onClick={() => toggleDepartmentExpansion(jd.id, dept.name)}
-                                >
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                      <div className="min-w-0 flex-1">
-                                        <h5 className="font-semibold text-sm leading-tight">{dept.shortName}</h5>
+                            {getFilteredDepartments(jd.degreePreferences).map(
+                              (dept) => (
+                                <div key={dept.name} className="space-y-2">
+                                  {/* Department Box - Colored like the image */}
+                                  <div
+                                    className={`${dept.bgColor} ${dept.borderColor} ${dept.textColor} border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 hover:shadow-md hover:scale-[1.02]`}
+                                    onClick={() =>
+                                      toggleDepartmentExpansion(
+                                        jd.id,
+                                        dept.name
+                                      )
+                                    }
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <div className="flex items-center gap-3">
+                                        <div className="min-w-0 flex-1">
+                                          <h5 className="font-semibold text-sm leading-tight">
+                                            {dept.shortName}
+                                          </h5>
+                                        </div>
+                                      </div>
+                                      <ChevronDown
+                                        className={`h-5 w-5 transition-transform duration-300 ease-in-out flex-shrink-0 ${
+                                          jd.expandedDepartments.includes(
+                                            dept.name
+                                          )
+                                            ? "rotate-180"
+                                            : "rotate-0"
+                                        }`}
+                                      />
+                                    </div>
+                                  </div>
+
+                                  {/* Specializations Dropdown - Smooth animation */}
+                                  <div
+                                    className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                                      jd.expandedDepartments.includes(dept.name)
+                                        ? "max-h-[500px] opacity-100"
+                                        : "max-h-0 opacity-0"
+                                    }`}
+                                  >
+                                    <div className="bg-white rounded-lg border border-slate-200 p-4 mt-2 shadow-sm max-h-80 overflow-y-auto">
+                                      <div className="space-y-4">
+                                        {/* Show all programs directly without degree type boxes */}
+                                        {Object.entries(dept.degrees)
+                                          .filter(([degreeType]) => {
+                                            const degreeMap: {
+                                              [key: string]: string[]
+                                            } = {
+                                              btech: ["B.Tech"],
+                                              mtech: ["M.Tech"],
+                                              bsc: ["B.Sc"],
+                                              msc: ["M.Sc"],
+                                              mca: ["MCA"],
+                                              ba: ["BA"],
+                                              bba: ["BBA"],
+                                              bcom: ["B.Com"],
+                                            }
+                                            const selectedDegreeTypes: string[] =
+                                              []
+                                            jd.degreePreferences.forEach(
+                                              (pref) => {
+                                                const mappedDegrees =
+                                                  degreeMap[pref]
+                                                if (mappedDegrees) {
+                                                  selectedDegreeTypes.push(
+                                                    ...mappedDegrees
+                                                  )
+                                                }
+                                              }
+                                            )
+                                            return selectedDegreeTypes.includes(
+                                              degreeType
+                                            )
+                                          })
+                                          .map(
+                                            ([degreeType, specializations]) => (
+                                              <div key={degreeType}>
+                                                {specializations.length > 0 && (
+                                                  <div className="space-y-3">
+                                                    <div className="text-xs font-semibold text-slate-600 uppercase tracking-wide flex items-center gap-2">
+                                                      <div className="w-2 h-2 rounded-full bg-slate-400"></div>
+                                                      {degreeType} Programs:
+                                                    </div>
+                                                    <div className="grid gap-2">
+                                                      {specializations.map(
+                                                        (
+                                                          spec: string,
+                                                          index: string
+                                                        ) => (
+                                                          <div
+                                                            key={spec}
+                                                            className="flex items-center space-x-3 p-2 rounded-md hover:bg-slate-50 transition-all duration-200 group"
+                                                          >
+                                                            <span className="text-xs font-medium text-slate-500 w-6 text-center bg-slate-200 rounded-full h-5 flex items-center justify-center group-hover:bg-slate-300 transition-colors duration-200 flex-shrink-0">
+                                                              {index + 1}
+                                                            </span>
+                                                            <Checkbox
+                                                              id={`${jd.id}-${spec}`}
+                                                              checked={jd.eligibleDepartments.includes(
+                                                                spec
+                                                              )}
+                                                              onCheckedChange={() =>
+                                                                toggleSpecialization(
+                                                                  jd.id,
+                                                                  spec
+                                                                )
+                                                              }
+                                                              className="border-slate-400 data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600 h-4 w-4 flex-shrink-0"
+                                                            />
+                                                            <Label
+                                                              htmlFor={`${jd.id}-${spec}`}
+                                                              className="text-sm text-slate-700 cursor-pointer flex-1 group-hover:text-slate-900 transition-colors duration-200 leading-tight"
+                                                            >
+                                                              {spec}
+                                                            </Label>
+                                                          </div>
+                                                        )
+                                                      )}
+                                                    </div>
+                                                  </div>
+                                                )}
+                                                {specializations.length ===
+                                                  0 && (
+                                                  <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                                    <div className="text-xs text-slate-500 italic flex items-center gap-2">
+                                                      <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
+                                                      No programs available for{" "}
+                                                      {degreeType}
+                                                    </div>
+                                                  </div>
+                                                )}
+                                              </div>
+                                            )
+                                          )}
                                       </div>
                                     </div>
-                                    <ChevronDown
-                                      className={`h-5 w-5 transition-transform duration-300 ease-in-out flex-shrink-0 ${
-                                        jd.expandedDepartments.includes(dept.name) ? "rotate-180" : "rotate-0"
-                                      }`}
-                                    />
                                   </div>
                                 </div>
-
-                                {/* Specializations Dropdown - Smooth animation */}
-                                <div
-                                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                                    jd.expandedDepartments.includes(dept.name)
-                                      ? "max-h-[500px] opacity-100"
-                                      : "max-h-0 opacity-0"
-                                  }`}
-                                >
-                                  <div className="bg-white rounded-lg border border-slate-200 p-4 mt-2 shadow-sm max-h-80 overflow-y-auto">
-                                    <div className="space-y-4">
-                                      {/* Show all programs directly without degree type boxes */}
-                                      {Object.entries(dept.degrees)
-                                        .filter(([degreeType]) => {
-                                          const degreeMap: { [key: string]: string[] } = {
-                                            btech: ["B.Tech"],
-                                            mtech: ["M.Tech"],
-                                            bsc: ["B.Sc"],
-                                            msc: ["M.Sc"],
-                                            mca: ["MCA"],
-                                            ba: ["BA"],
-                                            bba: ["BBA"],
-                                            bcom: ["B.Com"],
-                                          }
-                                          const selectedDegreeTypes: string[] = []
-                                          jd.degreePreferences.forEach((pref) => {
-                                            const mappedDegrees = degreeMap[pref]
-                                            if (mappedDegrees) {
-                                              selectedDegreeTypes.push(...mappedDegrees)
-                                            }
-                                          })
-                                          return selectedDegreeTypes.includes(degreeType)
-                                        })
-                                        .map(([degreeType, specializations]) => (
-                                          <div key={degreeType}>
-                                            {specializations.length > 0 && (
-                                              <div className="space-y-3">
-                                                <div className="text-xs font-semibold text-slate-600 uppercase tracking-wide flex items-center gap-2">
-                                                  <div className="w-2 h-2 rounded-full bg-slate-400"></div>
-                                                  {degreeType} Programs:
-                                                </div>
-                                                <div className="grid gap-2">
-                                                  {specializations.map((spec: string, index: string) => (
-                                                    <div
-                                                      key={spec}
-                                                      className="flex items-center space-x-3 p-2 rounded-md hover:bg-slate-50 transition-all duration-200 group"
-                                                    >
-                                                      <span className="text-xs font-medium text-slate-500 w-6 text-center bg-slate-200 rounded-full h-5 flex items-center justify-center group-hover:bg-slate-300 transition-colors duration-200 flex-shrink-0">
-                                                        {index + 1}
-                                                      </span>
-                                                      <Checkbox
-                                                        id={`${jd.id}-${spec}`}
-                                                        checked={jd.eligibleDepartments.includes(spec)}
-                                                        onCheckedChange={() => toggleSpecialization(jd.id, spec)}
-                                                        className="border-slate-400 data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600 h-4 w-4 flex-shrink-0"
-                                                      />
-                                                      <Label
-                                                        htmlFor={`${jd.id}-${spec}`}
-                                                        className="text-sm text-slate-700 cursor-pointer flex-1 group-hover:text-slate-900 transition-colors duration-200 leading-tight"
-                                                      >
-                                                        {spec}
-                                                      </Label>
-                                                    </div>
-                                                  ))}
-                                                </div>
-                                              </div>
-                                            )}
-                                            {specializations.length === 0 && (
-                                              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                                                <div className="text-xs text-slate-500 italic flex items-center gap-2">
-                                                  <div className="w-2 h-2 bg-slate-300 rounded-full"></div>
-                                                  No programs available for {degreeType}
-                                                </div>
-                                              </div>
-                                            )}
-                                          </div>
-                                        ))}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
+                              )
+                            )}
                           </div>
 
                           {/* Selected Specializations Summary */}
@@ -1277,7 +1580,8 @@ export default function HiringForm() {
                             <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-emerald-50 rounded-lg border border-blue-200">
                               <div className="text-sm font-semibold text-blue-800 mb-3 flex items-center gap-2">
                                 <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                Selected Programs ({jd.eligibleDepartments.length}):
+                                Selected Programs (
+                                {jd.eligibleDepartments.length}):
                               </div>
                               <div className="flex flex-wrap gap-2">
                                 {jd.eligibleDepartments.map((spec) => (
@@ -1299,14 +1603,19 @@ export default function HiringForm() {
                     {/* Compensation Section - Conditional based on job type */}
                     <div className="md:col-span-2">
                       <Separator className="my-4" />
-                      <h4 className="text-lg font-semibold text-slate-800 mb-4">Compensation Details *</h4>
+                      <h4 className="text-lg font-semibold text-slate-800 mb-4">
+                        Compensation Details *
+                      </h4>
                       <div className="grid gap-4 md:grid-cols-2">
                         {/* Show CTC for full-time, internship-fulltime, and internship-ppo */}
                         {(jd.type === "full-time" ||
                           jd.type === "internship-fulltime" ||
                           jd.type === "internship-ppo") && (
                           <div className="space-y-2">
-                            <Label htmlFor={`ctc-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                            <Label
+                              htmlFor={`ctc-${jd.id}`}
+                              className="text-sm font-semibold text-slate-700"
+                            >
                               CTC (Cost to Company) *
                             </Label>
                             <div className="flex gap-2">
@@ -1323,7 +1632,13 @@ export default function HiringForm() {
                               <Input
                                 placeholder="e.g., 12,00,000 per annum"
                                 value={jd.ctc}
-                                onChange={(e) => updateJobDescription(jd.id, "ctc", e.target.value)}
+                                onChange={(e) =>
+                                  updateJobDescription(
+                                    jd.id,
+                                    "ctc",
+                                    e.target.value
+                                  )
+                                }
                                 className="flex-1 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                                 onKeyDown={(e) => {
                                   if (e.key === "Enter") {
@@ -1340,7 +1655,10 @@ export default function HiringForm() {
                           jd.type === "internship-fulltime" ||
                           jd.type === "internship-ppo") && (
                           <div className="space-y-2">
-                            <Label htmlFor={`stipend-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                            <Label
+                              htmlFor={`stipend-${jd.id}`}
+                              className="text-sm font-semibold text-slate-700"
+                            >
                               Stipend (For Internships) *
                             </Label>
                             <div className="flex gap-2">
@@ -1357,7 +1675,13 @@ export default function HiringForm() {
                               <Input
                                 placeholder="e.g., 25,000 per month"
                                 value={jd.stipend}
-                                onChange={(e) => updateJobDescription(jd.id, "stipend", e.target.value)}
+                                onChange={(e) =>
+                                  updateJobDescription(
+                                    jd.id,
+                                    "stipend",
+                                    e.target.value
+                                  )
+                                }
                                 className="flex-1 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                                 onKeyDown={(e) => {
                                   if (e.key === "Enter") {
@@ -1370,14 +1694,23 @@ export default function HiringForm() {
                         )}
 
                         <div className="space-y-2 md:col-span-2">
-                          <Label htmlFor={`allowances-${jd.id}`} className="text-sm font-semibold text-slate-700">
+                          <Label
+                            htmlFor={`allowances-${jd.id}`}
+                            className="text-sm font-semibold text-slate-700"
+                          >
                             Additional Allowances
                           </Label>
                           <Input
                             id={`allowances-${jd.id}`}
                             placeholder="e.g., Travel allowance, Food allowance, Accommodation, etc."
                             value={jd.allowances}
-                            onChange={(e) => updateJobDescription(jd.id, "allowances", e.target.value)}
+                            onChange={(e) =>
+                              updateJobDescription(
+                                jd.id,
+                                "allowances",
+                                e.target.value
+                              )
+                            }
                             className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
@@ -1424,7 +1757,9 @@ export default function HiringForm() {
                 <Users className="h-5 w-5" />
                 Hiring Stages *
               </CardTitle>
-              <CardDescription className="text-purple-100">Define your hiring process stages</CardDescription>
+              <CardDescription className="text-purple-100">
+                Define your hiring process stages
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
               <div className="space-y-4">
@@ -1435,29 +1770,42 @@ export default function HiringForm() {
                   >
                     <div className="flex-1 grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label className="text-xs text-slate-500 uppercase tracking-wide">Stage {index + 1}</Label>
+                        <Label className="text-xs text-slate-500 uppercase tracking-wide">
+                          Stage {index + 1}
+                        </Label>
                         <Select
                           value={stageItem.stage}
-                          onValueChange={(value) => updateHiringStage(index, "stage", value)}
+                          onValueChange={(value) =>
+                            updateHiringStage(index, "stage", value)
+                          }
                         >
                           <SelectTrigger className="border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
                             <SelectValue placeholder="Select stage" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="none">None</SelectItem>
-                            {getAvailableStagesForIndex(index).map((availableStage) => (
-                              <SelectItem key={availableStage} value={availableStage}>
-                                {availableStage}
-                              </SelectItem>
-                            ))}
+                            {getAvailableStagesForIndex(index).map(
+                              (availableStage) => (
+                                <SelectItem
+                                  key={availableStage}
+                                  value={availableStage}
+                                >
+                                  {availableStage}
+                                </SelectItem>
+                              )
+                            )}
                           </SelectContent>
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-xs text-slate-500 uppercase tracking-wide">Mode of Conduct</Label>
+                        <Label className="text-xs text-slate-500 uppercase tracking-wide">
+                          Mode of Conduct
+                        </Label>
                         <Select
                           value={stageItem.mode}
-                          onValueChange={(value) => updateHiringStage(index, "mode", value)}
+                          onValueChange={(value) =>
+                            updateHiringStage(index, "mode", value)
+                          }
                         >
                           <SelectTrigger className="border-slate-300 focus:border-emerald-500 focus:ring-emerald-500">
                             <SelectValue placeholder="Select mode" />
@@ -1500,7 +1848,11 @@ export default function HiringForm() {
                   {hiringStages
                     .filter((stageItem) => stageItem.stage !== "")
                     .map((stageItem, index) => (
-                      <Badge key={index} variant="secondary" className="bg-emerald-100 text-emerald-800">
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className="bg-emerald-100 text-emerald-800"
+                      >
                         {stageItem.stage} ({stageItem.mode})
                       </Badge>
                     ))}
@@ -1516,18 +1868,29 @@ export default function HiringForm() {
                 <CalendarIcon className="h-5 w-5" />
                 Campus Visit Timeline *
               </CardTitle>
-              <CardDescription className="text-orange-100">Select your preferred campus visit dates</CardDescription>
+              <CardDescription className="text-orange-100">
+                Select your preferred campus visit dates
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
               {/* Campus Visit Dates with Enhanced Calendar Widget */}
               <div className="space-y-6">
                 {campusVisits.map((visit, index) => (
-                  <div key={visit.id} className="space-y-4 p-4 border border-slate-200 rounded-lg bg-slate-50">
+                  <div
+                    key={visit.id}
+                    className="space-y-4 p-4 border border-slate-200 rounded-lg bg-slate-50"
+                  >
                     <div className="flex items-center justify-between">
                       <div className="flex-1 mr-4">
                         <Input
                           value={visit.stageName}
-                          onChange={(e) => updateCampusVisit(visit.id, "stageName", e.target.value)}
+                          onChange={(e) =>
+                            updateCampusVisit(
+                              visit.id,
+                              "stageName",
+                              e.target.value
+                            )
+                          }
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault()
@@ -1536,7 +1899,9 @@ export default function HiringForm() {
                           className="text-lg font-semibold text-slate-800 border-slate-300 focus:border-blue-500 focus:ring-blue-500"
                           placeholder="Enter stage name"
                         />
-                        {index === 0 && <span className="text-red-500 ml-1">*</span>}
+                        {index === 0 && (
+                          <span className="text-red-500 ml-1">*</span>
+                        )}
                       </div>
                       {campusVisits.length > 1 && (
                         <Button
@@ -1580,13 +1945,20 @@ export default function HiringForm() {
                                 <CalendarIcon className="h-4 w-4" />
                               </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="start"
+                            >
                               <UICalendar
                                 mode="single"
                                 selected={visit.startDate}
-                                onSelect={(date) => updateCampusVisit(visit.id, "startDate", date)}
+                                onSelect={(date) =>
+                                  updateCampusVisit(visit.id, "startDate", date)
+                                }
                                 initialFocus
-                                disabled={(date) => date < new Date("1900-01-01")}
+                                disabled={(date) =>
+                                  date < new Date("1900-01-01")
+                                }
                                 showOutsideDays={false}
                                 modifiers={{
                                   unavailable: unavailableDates,
@@ -1616,9 +1988,12 @@ export default function HiringForm() {
 
                     {visit.startDate && (
                       <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                        <div className="text-sm font-semibold text-blue-800 mb-1">Selected Dates:</div>
+                        <div className="text-sm font-semibold text-blue-800 mb-1">
+                          Selected Dates:
+                        </div>
                         <div className="text-sm text-blue-700">
-                          {visit.startDate && `Start: ${formatDate(visit.startDate)}`}
+                          {visit.startDate &&
+                            `Start: ${formatDate(visit.startDate)}`}
                         </div>
                       </div>
                     )}
@@ -1647,12 +2022,17 @@ export default function HiringForm() {
                 <MessageSquare className="h-5 w-5" />
                 Additional Information
               </CardTitle>
-              <CardDescription className="text-teal-100">Upload job description</CardDescription>
+              <CardDescription className="text-teal-100">
+                Upload job description
+              </CardDescription>
             </CardHeader>
             <CardContent className="p-6">
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="job-brochure" className="text-sm font-semibold text-slate-700">
+                  <Label
+                    htmlFor="job-brochure"
+                    className="text-sm font-semibold text-slate-700"
+                  >
                     Job Brochure/Description *
                   </Label>
                   <div className="flex items-center justify-center w-full">
@@ -1663,9 +2043,12 @@ export default function HiringForm() {
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <Upload className="w-8 h-8 mb-4 text-slate-500" />
                         <p className="mb-2 text-sm text-slate-500">
-                          <span className="font-semibold">Click to upload</span> or drag and drop
+                          <span className="font-semibold">Click to upload</span>{" "}
+                          or drag and drop
                         </p>
-                        <p className="text-xs text-slate-500">PDF, Images, Text files</p>
+                        <p className="text-xs text-slate-500">
+                          PDF, Images, Text files
+                        </p>
                       </div>
                     </label>
                     <input
@@ -1681,7 +2064,9 @@ export default function HiringForm() {
                   {/* Display uploaded files */}
                   {uploadedFiles.length > 0 && (
                     <div className="mt-4 space-y-2">
-                      <Label className="text-sm font-semibold text-slate-700">Uploaded Files:</Label>
+                      <Label className="text-sm font-semibold text-slate-700">
+                        Uploaded Files:
+                      </Label>
                       <div className="space-y-2">
                         {uploadedFiles.map((file, index) => (
                           <div
@@ -1691,8 +2076,12 @@ export default function HiringForm() {
                             <div className="flex items-center gap-3">
                               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                               <div>
-                                <p className="text-sm font-medium text-slate-700">{file.name}</p>
-                                <p className="text-xs text-green-600 font-semibold">✓ Uploaded</p>
+                                <p className="text-sm font-medium text-slate-700">
+                                  {file.name}
+                                </p>
+                                <p className="text-xs text-green-600 font-semibold">
+                                  ✓ Uploaded
+                                </p>
                               </div>
                             </div>
                             <Button
@@ -1728,12 +2117,24 @@ export default function HiringForm() {
           <Card className="border-0 shadow-lg shadow-slate-200/50 bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl">
             <CardContent className="p-6 text-center">
               <div className="flex items-center justify-center gap-3 mb-3">
-                <img src="/images/tiet-logo-small.png" alt="TIET Logo" className="h-10 w-10" />
-                <h3 className="text-lg font-semibold text-slate-800">Thapar Institute of Engineering & Technology</h3>
+                <img
+                  src="/images/tiet-logo-small.png"
+                  alt="TIET Logo"
+                  className="h-10 w-10"
+                />
+                <h3 className="text-lg font-semibold text-slate-800">
+                  Thapar Institute of Engineering & Technology
+                </h3>
               </div>
-              <p className="text-sm text-slate-600 mb-1">(Deemed to be University)</p>
-              <p className="text-sm text-slate-600">P.O. Box 32, Bhadson Road, Patiala - 147004, Punjab, India</p>
-              <p className="text-sm text-slate-600">Phone: +91-175-2393021 | Email: placement@thapar.edu</p>
+              <p className="text-sm text-slate-600 mb-1">
+                (Deemed to be University)
+              </p>
+              <p className="text-sm text-slate-600">
+                P.O. Box 32, Bhadson Road, Patiala - 147004, Punjab, India
+              </p>
+              <p className="text-sm text-slate-600">
+                Phone: +91-175-2393021 | Email: placement@thapar.edu
+              </p>
             </CardContent>
           </Card>
         </form>

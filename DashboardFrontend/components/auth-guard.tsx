@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { useUser } from "@/components/user-context"
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from "components/user-context";
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useUser()
-  const router = useRouter()
+  const { isAuthenticated, isLoading } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace("/login")
+      router.replace("/login");
     }
-  }, [isAuthenticated, isLoading, router])
+  }, [isAuthenticated, isLoading, router]);
 
   if (isLoading) {
     return (
@@ -24,7 +24,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
           <p className="mt-2 text-gray-600">Checking session...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!isAuthenticated) {
@@ -35,8 +35,8 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
           <p className="mt-2 text-gray-600">Redirecting to login...</p>
         </div>
       </div>
-    )
+    );
   }
 
-  return <>{children}</>
+  return <>{children}</>;
 }

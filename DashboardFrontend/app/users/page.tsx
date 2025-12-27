@@ -1,121 +1,122 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { 
-  Users, 
-  Download, 
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { Button } from "components/ui/button";
+import { Badge } from "components/ui/badge";
+import { Input } from "components/ui/input";
+import {
+  Users,
+  Download,
   Search,
   Calendar,
   Building,
   Mail,
   UserCheck,
-  Filter
-} from "lucide-react"
+  Filter,
+} from "lucide-react";
 
 interface User {
-  id: number
-  email: string
-  role: string
-  name: string
-  company: string
-  createdAt: string
-  updatedAt?: string
+  id: number;
+  email: string;
+  role: string;
+  name: string;
+  company: string;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export default function UsersPage() {
-  const [users, setUsers] = useState<User[]>([])
-  const [filteredUsers, setFilteredUsers] = useState<User[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [roleFilter, setRoleFilter] = useState("all")
-  const [error, setError] = useState("")
+  const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [roleFilter, setRoleFilter] = useState("all");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    fetchUsers()
-  }, [])
+    fetchUsers();
+  }, []);
 
   useEffect(() => {
-    filterUsers()
-  }, [users, searchTerm, roleFilter])
+    filterUsers();
+  }, [users, searchTerm, roleFilter]);
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/auth/users")
+      const response = await fetch("http://localhost:5001/api/auth/users");
       if (response.ok) {
-        const data = await response.json()
-        setUsers(data.users || [])
+        const data = await response.json();
+        setUsers(data.users || []);
       } else {
-        setError("Failed to fetch users")
+        setError("Failed to fetch users");
       }
     } catch (err) {
-      setError("Network error while fetching users")
-      console.error("Fetch users error:", err)
+      setError("Network error while fetching users");
+      console.error("Fetch users error:", err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const filterUsers = () => {
-    let filtered = users
+    let filtered = users;
 
     // Search filter
     if (searchTerm) {
-      filtered = filtered.filter(user => 
-        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.company.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      filtered = filtered.filter(
+        (user) =>
+          user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.company.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
 
     // Role filter
     if (roleFilter !== "all") {
-      filtered = filtered.filter(user => user.role === roleFilter)
+      filtered = filtered.filter((user) => user.role === roleFilter);
     }
 
-    setFilteredUsers(filtered)
-  }
+    setFilteredUsers(filtered);
+  };
 
   const exportToCSV = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/auth/export/csv")
+      const response = await fetch("http://localhost:5001/api/auth/export/csv");
       if (response.ok) {
-        const blob = await response.blob()
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.style.display = 'none'
-        a.href = url
-        a.download = `ctpc-users-${new Date().toISOString().split('T')[0]}.csv`
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = `ctpc-users-${new Date().toISOString().split("T")[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
       } else {
-        setError("Failed to export CSV")
+        setError("Failed to export CSV");
       }
     } catch (err) {
-      setError("Network error while exporting CSV")
-      console.error("Export CSV error:", err)
+      setError("Network error while exporting CSV");
+      console.error("Export CSV error:", err);
     }
-  }
+  };
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
-      case 'admin':
-        return 'bg-red-100 text-red-800'
-      case 'hr':
-        return 'bg-blue-100 text-blue-800'
-      case 'hod':
-        return 'bg-green-100 text-green-800'
-      case 'team-member':
-        return 'bg-purple-100 text-purple-800'
+      case "admin":
+        return "bg-red-100 text-red-800";
+      case "hr":
+        return "bg-blue-100 text-blue-800";
+      case "hod":
+        return "bg-green-100 text-green-800";
+      case "team-member":
+        return "bg-purple-100 text-purple-800";
       default:
-        return 'bg-gray-100 text-gray-800'
+        return "bg-gray-100 text-gray-800";
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -127,13 +128,15 @@ export default function UsersPage() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">User Management</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          User Management
+        </h1>
         <p className="text-gray-600">Manage system users and export data</p>
       </div>
 
@@ -150,7 +153,9 @@ export default function UsersPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Total Users</p>
-                <p className="text-2xl font-bold text-gray-900">{users.length}</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {users.length}
+                </p>
               </div>
               <Users className="h-8 w-8 text-blue-600" />
             </div>
@@ -163,7 +168,7 @@ export default function UsersPage() {
               <div>
                 <p className="text-sm font-medium text-gray-600">HR Users</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {users.filter(u => u.role === 'hr').length}
+                  {users.filter((u) => u.role === "hr").length}
                 </p>
               </div>
               <UserCheck className="h-8 w-8 text-green-600" />
@@ -177,7 +182,7 @@ export default function UsersPage() {
               <div>
                 <p className="text-sm font-medium text-gray-600">Admin Users</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {users.filter(u => u.role === 'admin').length}
+                  {users.filter((u) => u.role === "admin").length}
                 </p>
               </div>
               <Building className="h-8 w-8 text-red-600" />
@@ -191,7 +196,7 @@ export default function UsersPage() {
               <div>
                 <p className="text-sm font-medium text-gray-600">Companies</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {new Set(users.map(u => u.company)).size}
+                  {new Set(users.map((u) => u.company)).size}
                 </p>
               </div>
               <Mail className="h-8 w-8 text-purple-600" />
@@ -208,7 +213,10 @@ export default function UsersPage() {
               <Filter className="h-5 w-5" />
               Filters & Actions
             </CardTitle>
-            <Button onClick={exportToCSV} className="bg-green-600 hover:bg-green-700">
+            <Button
+              onClick={exportToCSV}
+              className="bg-green-600 hover:bg-green-700"
+            >
               <Download className="h-4 w-4 mr-2" />
               Export CSV
             </Button>
@@ -253,12 +261,24 @@ export default function UsersPage() {
             <table className="w-full table-auto">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left p-4 font-medium text-gray-600">ID</th>
-                  <th className="text-left p-4 font-medium text-gray-600">Email</th>
-                  <th className="text-left p-4 font-medium text-gray-600">Name</th>
-                  <th className="text-left p-4 font-medium text-gray-600">Role</th>
-                  <th className="text-left p-4 font-medium text-gray-600">Company</th>
-                  <th className="text-left p-4 font-medium text-gray-600">Created</th>
+                  <th className="text-left p-4 font-medium text-gray-600">
+                    ID
+                  </th>
+                  <th className="text-left p-4 font-medium text-gray-600">
+                    Email
+                  </th>
+                  <th className="text-left p-4 font-medium text-gray-600">
+                    Name
+                  </th>
+                  <th className="text-left p-4 font-medium text-gray-600">
+                    Role
+                  </th>
+                  <th className="text-left p-4 font-medium text-gray-600">
+                    Company
+                  </th>
+                  <th className="text-left p-4 font-medium text-gray-600">
+                    Created
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -292,12 +312,14 @@ export default function UsersPage() {
             {filteredUsers.length === 0 && (
               <div className="text-center py-8">
                 <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">No users found matching your criteria</p>
+                <p className="text-gray-500">
+                  No users found matching your criteria
+                </p>
               </div>
             )}
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

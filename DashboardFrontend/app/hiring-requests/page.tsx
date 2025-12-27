@@ -1,81 +1,81 @@
-﻿"use client"
+﻿"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { useUser } from "@/components/user-context"
-import { 
-  Search, 
-  Filter, 
-  Plus, 
-  Edit3, 
-  Calendar, 
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "components/ui/card";
+import { Button } from "components/ui/button";
+import { Badge } from "components/ui/badge";
+import { Input } from "components/ui/input";
+import { useUser } from "components/user-context";
+import {
+  Search,
+  Filter,
+  Plus,
+  Edit3,
+  Calendar,
   Trash2,
   Building,
   MapPin,
   Users,
   DollarSign,
-  Briefcase
-} from "lucide-react"
+  Briefcase,
+} from "lucide-react";
 
 interface HiringRequest {
-  _id: string
-  companyName: string
+  _id: string;
+  companyName: string;
   hrContacts: Array<{
-    name: string
-    email: string
-    phone: string
-  }>
+    name: string;
+    email: string;
+    phone: string;
+  }>;
   jobDescriptions: Array<{
-    title: string
-    type: string
-    openings: string
-    ctc: string
-    stipend: string
-    skills: string
-    eligibleDepartments: string[]
-  }>
+    title: string;
+    type: string;
+    openings: string;
+    ctc: string;
+    stipend: string;
+    skills: string;
+    eligibleDepartments: string[];
+  }>;
   campusVisits: Array<{
-    startDate: string
-    location: string
-  }>
-  createdAt: string
-  status?: string
+    startDate: string;
+    location: string;
+  }>;
+  createdAt: string;
+  status?: string;
 }
 
 export default function HiringRequestsPage() {
-  const { user } = useUser()
-  const [requests, setRequests] = useState<HiringRequest[]>([])
-  const [loading, setLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState("")
+  const { user } = useUser();
+  const [requests, setRequests] = useState<HiringRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetchHiringRequests()
-  }, [])
+    fetchHiringRequests();
+  }, []);
 
   const fetchHiringRequests = async () => {
     try {
-      const token = localStorage.getItem("authToken")
+      const token = localStorage.getItem("authToken");
       const response = await fetch("http://localhost:5001/api/hr/submissions", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
+      });
 
       if (response.ok) {
-        const data = await response.json()
-        setRequests(data.submissions || [])
+        const data = await response.json();
+        setRequests(data.submissions || []);
       } else {
-        console.error("Failed to fetch hiring requests")
+        console.error("Failed to fetch hiring requests");
       }
     } catch (error) {
-      console.error("Error fetching hiring requests:", error)
+      console.error("Error fetching hiring requests:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // Mock data for demonstration since no data is showing
   const mockRequests: HiringRequest[] = [
@@ -86,8 +86,8 @@ export default function HiringRequestsPage() {
         {
           name: "John Doe",
           email: "john@techsolutions.com",
-          phone: "+91-98765-43210"
-        }
+          phone: "+91-98765-43210",
+        },
       ],
       jobDescriptions: [
         {
@@ -97,29 +97,34 @@ export default function HiringRequestsPage() {
           ctc: "12",
           stipend: "",
           skills: "React, Node.js, MongoDB",
-          eligibleDepartments: ["CSE", "IT"]
-        }
+          eligibleDepartments: ["CSE", "IT"],
+        },
       ],
       campusVisits: [
         {
           startDate: "2025-10-15",
-          location: "Bangalore"
-        }
+          location: "Bangalore",
+        },
       ],
       createdAt: "2025-10-04",
-      status: "approved"
-    }
-  ]
+      status: "approved",
+    },
+  ];
 
-  const displayRequests = requests.length > 0 ? requests : mockRequests
+  const displayRequests = requests.length > 0 ? requests : mockRequests;
 
   if (loading) {
     return (
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Hiring Requests</h1>
-            <p className="text-gray-600">Welcome back, {user?.email?.split('@')[0] || 'diya'}! Manage your hiring requests.</p>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Hiring Requests
+            </h1>
+            <p className="text-gray-600">
+              Welcome back, {user?.email?.split("@")[0] || "diya"}! Manage your
+              hiring requests.
+            </p>
           </div>
           <Button className="bg-blue-600 hover:bg-blue-700">
             <Plus className="h-4 w-4 mr-2" />
@@ -130,7 +135,7 @@ export default function HiringRequestsPage() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -139,7 +144,10 @@ export default function HiringRequestsPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Hiring Requests</h1>
-          <p className="text-gray-600">Welcome back, {user?.email?.split('@')[0] || 'diya'}! Manage your hiring requests.</p>
+          <p className="text-gray-600">
+            Welcome back, {user?.email?.split("@")[0] || "diya"}! Manage your
+            hiring requests.
+          </p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700">
           <Plus className="h-4 w-4 mr-2" />
@@ -182,7 +190,9 @@ export default function HiringRequestsPage() {
                       <Building className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{request.companyName}</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {request.companyName}
+                      </h3>
                       <Badge className="bg-green-100 text-green-700 border-green-300">
                         Approved
                       </Badge>
@@ -194,7 +204,9 @@ export default function HiringRequestsPage() {
                     <div>
                       {request.jobDescriptions?.map((job, index) => (
                         <div key={index} className="mb-4">
-                          <h4 className="font-medium text-gray-900 mb-2">{job.title}</h4>
+                          <h4 className="font-medium text-gray-900 mb-2">
+                            {job.title}
+                          </h4>
                           <div className="space-y-1 text-sm text-gray-600">
                             <div className="flex items-center gap-2">
                               <Briefcase className="h-4 w-4" />
@@ -211,20 +223,29 @@ export default function HiringRequestsPage() {
                               </div>
                             )}
                           </div>
-                          
+
                           <div className="mt-3">
                             <div className="flex items-center gap-2 mb-2">
                               <DollarSign className="h-4 w-4 text-gray-500" />
-                              <span className="text-sm font-medium">Package: {job.ctc || "12"} LPA</span>
+                              <span className="text-sm font-medium">
+                                Package: {job.ctc || "12"} LPA
+                              </span>
                             </div>
-                            
+
                             {/* Tech Tags */}
                             <div className="flex flex-wrap gap-1">
-                              {job.skills?.split(",").slice(0, 3).map((tech, techIndex) => (
-                                <Badge key={techIndex} variant="secondary" className="text-xs">
-                                  {tech.trim()}
-                                </Badge>
-                              ))}
+                              {job.skills
+                                ?.split(",")
+                                .slice(0, 3)
+                                .map((tech, techIndex) => (
+                                  <Badge
+                                    key={techIndex}
+                                    variant="secondary"
+                                    className="text-xs"
+                                  >
+                                    {tech.trim()}
+                                  </Badge>
+                                ))}
                             </div>
                           </div>
                         </div>
@@ -233,7 +254,9 @@ export default function HiringRequestsPage() {
 
                     {/* HR Contact */}
                     <div>
-                      <h4 className="font-medium text-gray-900 mb-2">HR Contact</h4>
+                      <h4 className="font-medium text-gray-900 mb-2">
+                        HR Contact
+                      </h4>
                       {request.hrContacts?.[0] && (
                         <div className="space-y-1 text-sm text-gray-600">
                           <div>{request.hrContacts[0].name}</div>
@@ -253,7 +276,11 @@ export default function HiringRequestsPage() {
                   <Button variant="outline" size="sm">
                     <Calendar className="h-4 w-4" />
                   </Button>
-                  <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-red-600 hover:text-red-700"
+                  >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -263,5 +290,5 @@ export default function HiringRequestsPage() {
         ))}
       </div>
     </div>
-  )
+  );
 }

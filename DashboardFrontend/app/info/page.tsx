@@ -1,55 +1,59 @@
-﻿"use client"
+﻿"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { useUser } from "@/components/user-context"
-import { 
-  User, 
-  Building, 
-  Mail, 
-  Phone, 
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Textarea } from "components/ui/textarea";
+import { Badge } from "components/ui/badge";
+import { useUser } from "components/user-context";
+import {
+  User,
+  Building,
+  Mail,
+  Phone,
   MapPin,
   Save,
   Edit3,
-  Shield
-} from "lucide-react"
+  Shield,
+} from "lucide-react";
 
 export default function InfoPage() {
-  const { user } = useUser()
-  const [isEditing, setIsEditing] = useState(false)
+  const { user } = useUser();
+  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: user?.email?.split('@')[0] || 'HR Representative',
-    email: user?.email || 'hr@company.com',
-    phone: '+91-98765-43210',
-    department: 'Human Resources',
-    role: 'HR Manager',
-    company: 'Tech Solutions Inc.',
-    address: 'Bangalore, Karnataka, India',
-    bio: 'Experienced HR professional managing campus recruitment and placement activities.',
-  })
+    name: user?.email?.split("@")[0] || "HR Representative",
+    email: user?.email || "hr@company.com",
+    phone: "+91-98765-43210",
+    department: "Human Resources",
+    role: "HR Manager",
+    company: "Tech Solutions Inc.",
+    address: "Bangalore, Karnataka, India",
+    bio: "Experienced HR professional managing campus recruitment and placement activities.",
+  });
 
   const handleSave = () => {
-    console.log('Saving profile:', formData)
-    setIsEditing(false)
-  }
+    console.log("Saving profile:", formData);
+    setIsEditing(false);
+  };
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Profile Information</h1>
-          <p className="text-gray-600">Manage your profile and company information</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Profile Information
+          </h1>
+          <p className="text-gray-600">
+            Manage your profile and company information
+          </p>
         </div>
-        <Button 
-          onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+        <Button
+          onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
           className="bg-blue-600 hover:bg-blue-700"
         >
           {isEditing ? (
@@ -83,13 +87,15 @@ export default function InfoPage() {
                     {formData.name.charAt(0).toUpperCase()}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">{formData.name}</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {formData.name}
+                </h3>
                 <p className="text-gray-600">{formData.role}</p>
                 <Badge className="mt-2 bg-blue-100 text-blue-700">
                   {formData.department}
                 </Badge>
               </div>
-              
+
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm">
                   <Mail className="h-4 w-4 text-gray-400" />
@@ -125,7 +131,10 @@ export default function InfoPage() {
               <Button variant="outline" className="w-full">
                 Two-Factor Authentication
               </Button>
-              <Button variant="outline" className="w-full text-red-600 hover:text-red-700">
+              <Button
+                variant="outline"
+                className="w-full text-red-600 hover:text-red-700"
+              >
                 Logout from All Devices
               </Button>
             </CardContent>
@@ -147,7 +156,7 @@ export default function InfoPage() {
                   {isEditing ? (
                     <Input
                       value={formData.name}
-                      onChange={(e) => handleChange('name', e.target.value)}
+                      onChange={(e) => handleChange("name", e.target.value)}
                     />
                   ) : (
                     <div className="p-2 bg-gray-50 rounded-md text-gray-900">
@@ -164,7 +173,7 @@ export default function InfoPage() {
                     <Input
                       type="email"
                       value={formData.email}
-                      onChange={(e) => handleChange('email', e.target.value)}
+                      onChange={(e) => handleChange("email", e.target.value)}
                     />
                   ) : (
                     <div className="p-2 bg-gray-50 rounded-md text-gray-900">
@@ -180,7 +189,7 @@ export default function InfoPage() {
                   {isEditing ? (
                     <Input
                       value={formData.phone}
-                      onChange={(e) => handleChange('phone', e.target.value)}
+                      onChange={(e) => handleChange("phone", e.target.value)}
                     />
                   ) : (
                     <div className="p-2 bg-gray-50 rounded-md text-gray-900">
@@ -196,7 +205,7 @@ export default function InfoPage() {
                   {isEditing ? (
                     <Input
                       value={formData.role}
-                      onChange={(e) => handleChange('role', e.target.value)}
+                      onChange={(e) => handleChange("role", e.target.value)}
                     />
                   ) : (
                     <div className="p-2 bg-gray-50 rounded-md text-gray-900">
@@ -212,7 +221,9 @@ export default function InfoPage() {
                   {isEditing ? (
                     <Input
                       value={formData.department}
-                      onChange={(e) => handleChange('department', e.target.value)}
+                      onChange={(e) =>
+                        handleChange("department", e.target.value)
+                      }
                     />
                   ) : (
                     <div className="p-2 bg-gray-50 rounded-md text-gray-900">
@@ -228,7 +239,7 @@ export default function InfoPage() {
                   {isEditing ? (
                     <Input
                       value={formData.company}
-                      onChange={(e) => handleChange('company', e.target.value)}
+                      onChange={(e) => handleChange("company", e.target.value)}
                     />
                   ) : (
                     <div className="p-2 bg-gray-50 rounded-md text-gray-900">
@@ -245,7 +256,7 @@ export default function InfoPage() {
                 {isEditing ? (
                   <Input
                     value={formData.address}
-                    onChange={(e) => handleChange('address', e.target.value)}
+                    onChange={(e) => handleChange("address", e.target.value)}
                   />
                 ) : (
                   <div className="p-2 bg-gray-50 rounded-md text-gray-900">
@@ -261,7 +272,7 @@ export default function InfoPage() {
                 {isEditing ? (
                   <Textarea
                     value={formData.bio}
-                    onChange={(e) => handleChange('bio', e.target.value)}
+                    onChange={(e) => handleChange("bio", e.target.value)}
                     rows={4}
                   />
                 ) : (
@@ -273,16 +284,13 @@ export default function InfoPage() {
 
               {isEditing && (
                 <div className="flex gap-2 pt-4 border-t">
-                  <Button 
+                  <Button
                     onClick={handleSave}
                     className="bg-blue-600 hover:bg-blue-700"
                   >
                     Save Changes
                   </Button>
-                  <Button 
-                    variant="outline"
-                    onClick={() => setIsEditing(false)}
-                  >
+                  <Button variant="outline" onClick={() => setIsEditing(false)}>
                     Cancel
                   </Button>
                 </div>
@@ -292,5 +300,5 @@ export default function InfoPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

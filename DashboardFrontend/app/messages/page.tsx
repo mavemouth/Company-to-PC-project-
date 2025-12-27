@@ -1,86 +1,95 @@
-﻿"use client"
+﻿"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { useUser } from "@/components/user-context"
-import { 
-  MessageSquare, 
-  Send, 
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { Button } from "components/ui/button";
+import { Input } from "components/ui/input";
+import { Badge } from "components/ui/badge";
+import { useUser } from "components/user-context";
+import {
+  MessageSquare,
+  Send,
   Search,
   Plus,
   User,
   Users,
-  Bell
-} from "lucide-react"
+  Bell,
+} from "lucide-react";
 
 export default function MessagesPage() {
-  const { user } = useUser()
-  const [selectedConversation, setSelectedConversation] = useState("ctpc-admin")
-  const [messageText, setMessageText] = useState("")
+  const { user } = useUser();
+  const [selectedConversation, setSelectedConversation] =
+    useState("ctpc-admin");
+  const [messageText, setMessageText] = useState("");
 
   // Get assigned team member for HR or show all conversations for team members/admin
-  const conversations = user?.role === 'HR Manager' ? [
-    {
-      id: "assigned-member",
-      name: "Team Member",  // This will be replaced with actual assigned team member
-      lastMessage: "Last message from conversation...",
-      time: "02:30 PM",
-      unread: 0,
-      type: "direct"
-    }
-  ] : user?.role === 'Team Member' ? [
-    {
-      id: "assigned-companies",
-      name: "My Assigned Companies",
-      lastMessage: "Messages from assigned companies...",
-      time: "02:30 PM",
-      unread: 0,
-      type: "direct"
-    }
-  ] : [
-    {
-      id: "all-communications",
-      name: "All Communications",
-      lastMessage: "Overview of all conversations...",
-      time: "02:30 PM",
-      unread: 0,
-      type: "direct"
-    }
-  ]
+  const conversations =
+    user?.role === "HR"
+      ? [
+          {
+            id: "assigned-member",
+            name: "Team Member", // This will be replaced with actual assigned team member
+            lastMessage: "Last message from conversation...",
+            time: "02:30 PM",
+            unread: 0,
+            type: "direct",
+          },
+        ]
+      : user?.role === "FOLLOW_UP_TEAM"
+      ? [
+          {
+            id: "assigned-companies",
+            name: "My Assigned Companies",
+            lastMessage: "Messages from assigned companies...",
+            time: "02:30 PM",
+            unread: 0,
+            type: "direct",
+          },
+        ]
+      : [
+          {
+            id: "all-communications",
+            name: "All Communications",
+            lastMessage: "Overview of all conversations...",
+            time: "02:30 PM",
+            unread: 0,
+            type: "direct",
+          },
+        ];
 
   const messages = [
     {
       id: 1,
       from: "CTPC Admin",
-      content: "Hi! Could you please submit the placement reports by Friday? We need them for the monthly review.",
+      content:
+        "Hi! Could you please submit the placement reports by Friday? We need them for the monthly review.",
       time: "02:30 PM",
-      sent: false
+      sent: false,
     },
     {
-      id: 2, 
+      id: 2,
       from: "You",
-      content: "Sure, I'll have them ready by Thursday evening. Should I include the department-wise breakdown?",
+      content:
+        "Sure, I'll have them ready by Thursday evening. Should I include the department-wise breakdown?",
       time: "02:45 PM",
-      sent: true
+      sent: true,
     },
     {
       id: 3,
-      from: "CTPC Admin", 
-      content: "Yes, please include the department-wise breakdown. That would be very helpful. Thanks!",
+      from: "CTPC Admin",
+      content:
+        "Yes, please include the department-wise breakdown. That would be very helpful. Thanks!",
       time: "03:00 PM",
-      sent: false
-    }
-  ]
+      sent: false,
+    },
+  ];
 
   const handleSendMessage = () => {
     if (messageText.trim()) {
-      console.log("Sending message:", messageText)
-      setMessageText("")
+      console.log("Sending message:", messageText);
+      setMessageText("");
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -106,10 +115,13 @@ export default function MessagesPage() {
               </div>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input placeholder="Search conversations..." className="pl-10" />
+                <Input
+                  placeholder="Search conversations..."
+                  className="pl-10"
+                />
               </div>
             </CardHeader>
-            
+
             <CardContent className="p-0">
               <div className="space-y-1">
                 {conversations.map((conv) => (
@@ -180,14 +192,16 @@ export default function MessagesPage() {
                 </Button>
               </div>
             </CardHeader>
-            
+
             <CardContent className="flex-1 flex flex-col p-0">
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex ${message.sent ? "justify-end" : "justify-start"}`}
+                    className={`flex ${
+                      message.sent ? "justify-end" : "justify-start"
+                    }`}
                   >
                     <div
                       className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
@@ -197,7 +211,7 @@ export default function MessagesPage() {
                       }`}
                     >
                       <p className="text-sm">{message.content}</p>
-                      <p 
+                      <p
                         className={`text-xs mt-1 ${
                           message.sent ? "text-blue-100" : "text-gray-500"
                         }`}
@@ -208,7 +222,7 @@ export default function MessagesPage() {
                   </div>
                 ))}
               </div>
-              
+
               {/* Message Input */}
               <div className="border-t p-4">
                 <div className="flex gap-2">
@@ -219,7 +233,7 @@ export default function MessagesPage() {
                     onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                     className="flex-1"
                   />
-                  <Button 
+                  <Button
                     onClick={handleSendMessage}
                     className="bg-blue-600 hover:bg-blue-700"
                   >
@@ -232,5 +246,5 @@ export default function MessagesPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

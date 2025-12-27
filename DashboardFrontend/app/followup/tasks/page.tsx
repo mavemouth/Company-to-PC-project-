@@ -1,159 +1,162 @@
-﻿"use client"
+﻿"use client";
 
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "components/ui/card";
+import { Button } from "components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Badge } from '@/components/ui/badge'
-import { Plus, Clock, CheckCircle2, XCircle } from 'lucide-react'
-import { useToast } from '@/hooks/use-toast'
+} from "components/ui/dialog";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { Textarea } from "components/ui/textarea";
+import { Badge } from "components/ui/badge";
+import { Plus, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { useToast } from "hooks/use-toast";
 
 interface Task {
-  id: string
-  title: string
-  description: string
-  dueDate: string
-  priority: 'low' | 'medium' | 'high'
-  status: 'pending' | 'in_progress' | 'completed'
+  id: string;
+  title: string;
+  description: string;
+  dueDate: string;
+  priority: "low" | "medium" | "high";
+  status: "pending" | "in_progress" | "completed";
   assignedTo: {
-    id: string
-    name: string
-    email: string
-  }
+    id: string;
+    name: string;
+    email: string;
+  };
 }
 
 export default function TasksPage() {
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false)
-  const { toast } = useToast()
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
-    fetchTasks()
-  }, [])
+    fetchTasks();
+  }, []);
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch('http://localhost:5001/api/followup/tasks', {
+      const response = await fetch("http://localhost:5001/api/followup/tasks", {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      const data = await response.json()
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
       if (data.success) {
-        setTasks(data.tasks)
+        setTasks(data.tasks);
       }
     } catch (error) {
-      console.error('Error fetching tasks:', error)
+      console.error("Error fetching tasks:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to fetch tasks',
-        variant: 'destructive'
-      })
+        title: "Error",
+        description: "Failed to fetch tasks",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   const handleAddTask = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const newTask = {
-      title: formData.get('title'),
-      description: formData.get('description'),
-      dueDate: formData.get('dueDate'),
-      priority: formData.get('priority'),
-      assignedTo: formData.get('assignedTo')
-    }
+      title: formData.get("title"),
+      description: formData.get("description"),
+      dueDate: formData.get("dueDate"),
+      priority: formData.get("priority"),
+      assignedTo: formData.get("assignedTo"),
+    };
 
     try {
-      const response = await fetch('http://localhost:5001/api/followup/tasks', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5001/api/followup/tasks", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify(newTask)
-      })
+        body: JSON.stringify(newTask),
+      });
 
-      const data = await response.json()
+      const data = await response.json();
       if (data.success) {
         toast({
-          title: 'Success',
-          description: 'Task added successfully'
-        })
-        fetchTasks()
-        setIsAddTaskOpen(false)
+          title: "Success",
+          description: "Task added successfully",
+        });
+        fetchTasks();
+        setIsAddTaskOpen(false);
       }
     } catch (error) {
-      console.error('Error adding task:', error)
+      console.error("Error adding task:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to add task',
-        variant: 'destructive'
-      })
+        title: "Error",
+        description: "Failed to add task",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   const updateTaskStatus = async (taskId: string, status: string) => {
     try {
-      const response = await fetch(`http://localhost:5001/api/followup/tasks/${taskId}/status`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ status })
-      })
+      const response = await fetch(
+        `http://localhost:5001/api/followup/tasks/${taskId}/status`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status }),
+        }
+      );
 
-      const data = await response.json()
+      const data = await response.json();
       if (data.success) {
         toast({
-          title: 'Success',
-          description: 'Task status updated'
-        })
-        fetchTasks()
+          title: "Success",
+          description: "Task status updated",
+        });
+        fetchTasks();
       }
     } catch (error) {
-      console.error('Error updating task:', error)
+      console.error("Error updating task:", error);
       toast({
-        title: 'Error',
-        description: 'Failed to update task',
-        variant: 'destructive'
-      })
+        title: "Error",
+        description: "Failed to update task",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high':
-        return 'bg-red-100 text-red-800'
-      case 'medium':
-        return 'bg-yellow-100 text-yellow-800'
-      case 'low':
-        return 'bg-green-100 text-green-800'
+      case "high":
+        return "bg-red-100 text-red-800";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800";
+      case "low":
+        return "bg-green-100 text-green-800";
       default:
-        return 'bg-gray-100 text-gray-800'
+        return "bg-gray-100 text-gray-800";
     }
-  }
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed':
-        return <CheckCircle2 className="h-4 w-4 text-green-600" />
-      case 'in_progress':
-        return <Clock className="h-4 w-4 text-yellow-600" />
-      case 'pending':
-        return <XCircle className="h-4 w-4 text-red-600" />
+      case "completed":
+        return <CheckCircle2 className="h-4 w-4 text-green-600" />;
+      case "in_progress":
+        return <Clock className="h-4 w-4 text-yellow-600" />;
+      case "pending":
+        return <XCircle className="h-4 w-4 text-red-600" />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -177,8 +180,8 @@ export default function TasksPage() {
           <CardContent>
             <div className="space-y-4">
               {tasks
-                .filter(task => task.status === 'pending')
-                .map(task => (
+                .filter((task) => task.status === "pending")
+                .map((task) => (
                   <Card key={task.id}>
                     <CardContent className="pt-6">
                       <div className="flex justify-between items-start mb-2">
@@ -197,7 +200,9 @@ export default function TasksPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => updateTaskStatus(task.id, 'in_progress')}
+                          onClick={() =>
+                            updateTaskStatus(task.id, "in_progress")
+                          }
                         >
                           Start
                         </Button>
@@ -220,8 +225,8 @@ export default function TasksPage() {
           <CardContent>
             <div className="space-y-4">
               {tasks
-                .filter(task => task.status === 'in_progress')
-                .map(task => (
+                .filter((task) => task.status === "in_progress")
+                .map((task) => (
                   <Card key={task.id}>
                     <CardContent className="pt-6">
                       <div className="flex justify-between items-start mb-2">
@@ -240,7 +245,7 @@ export default function TasksPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => updateTaskStatus(task.id, 'completed')}
+                          onClick={() => updateTaskStatus(task.id, "completed")}
                         >
                           Complete
                         </Button>
@@ -263,8 +268,8 @@ export default function TasksPage() {
           <CardContent>
             <div className="space-y-4">
               {tasks
-                .filter(task => task.status === 'completed')
-                .map(task => (
+                .filter((task) => task.status === "completed")
+                .map((task) => (
                   <Card key={task.id}>
                     <CardContent className="pt-6">
                       <div className="flex justify-between items-start mb-2">
@@ -306,12 +311,7 @@ export default function TasksPage() {
             </div>
             <div>
               <Label htmlFor="dueDate">Due Date</Label>
-              <Input
-                id="dueDate"
-                name="dueDate"
-                type="date"
-                required
-              />
+              <Input id="dueDate" name="dueDate" type="date" required />
             </div>
             <div>
               <Label htmlFor="priority">Priority</Label>
@@ -331,5 +331,5 @@ export default function TasksPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

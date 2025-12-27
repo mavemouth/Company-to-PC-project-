@@ -1,59 +1,59 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Home, FileText, Calendar, MessageSquare, Info } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { useUser } from "@/components/user-context"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Home, FileText, Calendar, MessageSquare, Info } from "lucide-react";
+import { Badge } from "components/ui/badge";
+import { useUser } from "components/user-context";
 
 // Define navigation items based on user role
 const adminNavigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Companies", href: "/companies", icon: FileText },
-  { name: "Settings", href: "/settings", icon: Info }
-]
+  { name: "Settings", href: "/settings", icon: Info },
+];
 
 const hodNavigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Hiring Requests", href: "/hiring-requests", icon: FileText },
   { name: "Messages", href: "/messages", icon: MessageSquare },
-  { name: "Settings", href: "/settings", icon: Info }
-]
+  { name: "Settings", href: "/settings", icon: Info },
+];
 
 const followUpTeamNavigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Hiring Requests", href: "/hiring-requests", icon: FileText },
   { name: "Messages", href: "/messages", icon: MessageSquare },
   { name: "Calendar", href: "/calendar", icon: Calendar },
-  { name: "Analytics", href: "/analytics", icon: Info }
-]
+  { name: "Analytics", href: "/analytics", icon: Info },
+];
 
 const hrNavigation = [
   { name: "Dashboard", href: "/", icon: Home },
   { name: "Forms", href: "/forms", icon: FileText },
   { name: "Messages", href: "/messages", icon: MessageSquare },
-  { name: "Settings", href: "/settings", icon: Info }
-]
+  { name: "Settings", href: "/settings", icon: Info },
+];
 
 export function Sidebar() {
-  const pathname = usePathname()
-  const { user } = useUser()
+  const pathname = usePathname();
+  const { user } = useUser();
 
   // Get navigation items based on user role
   const getNavigation = () => {
     switch (user?.role) {
-      case 'ADMIN':
-        return adminNavigation
-      case 'HOD':
-        return hodNavigation
-      case 'FOLLOW_UP_TEAM':
-        return followUpTeamNavigation
-      case 'HR':
-        return hrNavigation
+      case "ADMIN":
+        return adminNavigation;
+      case "HOD":
+        return hodNavigation;
+      case "FOLLOW_UP_TEAM":
+        return followUpTeamNavigation;
+      case "HR":
+        return hrNavigation;
       default:
-        return []
+        return [];
     }
-  }
+  };
 
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-72 flex-col bg-white border-r border-gray-200 flex">
@@ -75,14 +75,19 @@ export function Sidebar() {
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
             <span className="text-white font-medium text-sm">
-              {user?.initials || user?.name?.charAt(0) || user?.email?.charAt(0).toUpperCase() || 'U'}
+              {user?.initials ||
+                user?.name?.charAt(0) ||
+                user?.email?.charAt(0).toUpperCase() ||
+                "U"}
             </span>
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium text-gray-900">
-              {user?.name || user?.email?.split('@')[0] || 'User'}
+              {user?.name || user?.email?.split("@")[0] || "User"}
             </span>
-            <span className="text-xs text-gray-500">{user?.role || 'Guest'}</span>
+            <span className="text-xs text-gray-500">
+              {user?.role || "Guest"}
+            </span>
           </div>
         </div>
       </div>
@@ -131,5 +136,5 @@ export function Sidebar() {
         </div>
       </div>
     </aside>
-  )
+  );
 }
