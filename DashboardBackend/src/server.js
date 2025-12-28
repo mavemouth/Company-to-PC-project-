@@ -30,7 +30,12 @@ app.use(requestLogger);
 
 // Connect to MongoDB (same database as FormBackend)
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/hr_form")
+  .connect(
+    process.env.MONGODB_URI,
+    {
+      dbName: "ctpc_form",
+    } || "mongodb://127.0.0.1:27017/hr_form"
+  )
   .then(() => {
     console.log("✅ MongoDB Connected");
     // Load all models
