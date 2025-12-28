@@ -27,7 +27,9 @@ export default function RootPage() {
     };
 
     const redirectUrl = roleRoutingMap[user.role] || "/dashboard";
-    console.log(`🎯 Redirecting from root to: ${redirectUrl} (role: ${user.role})`);
+    console.log(
+      `🎯 Redirecting from root to: ${redirectUrl} (role: ${user.role})`
+    );
     router.replace(redirectUrl);
   }, [isLoading, isAuthenticated, user, router]);
 

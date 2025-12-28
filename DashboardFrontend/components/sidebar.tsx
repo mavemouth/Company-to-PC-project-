@@ -1,43 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Home, FileText, Calendar, MessageSquare, Info } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import {
+  Home,
+  FileText,
+  Calendar,
+  MessageSquare,
+  Info,
+  LogOut,
+} from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { useUser } from "../components/user-context";
 
 // Define navigation items based on user role
 const adminNavigation = [
-  { name: "Dashboard", href: "/", icon: Home },
-  { name: "Companies", href: "/companies", icon: FileText },
-  { name: "Settings", href: "/settings", icon: Info },
+  { name: "Dashboard", href: "/admin", icon: Home },
+  { name: "Companies", href: "/admin/companies", icon: FileText },
 ];
 
 const hodNavigation = [
-  { name: "Dashboard", href: "/", icon: Home },
-  { name: "Hiring Requests", href: "/hiring-requests", icon: FileText },
-  { name: "Messages", href: "/messages", icon: MessageSquare },
-  { name: "Settings", href: "/settings", icon: Info },
+  { name: "Dashboard", href: "/hod", icon: Home },
+  { name: "Hiring Requests", href: "/hod/hiring-requests", icon: FileText },
 ];
 
 const followUpTeamNavigation = [
-  { name: "Dashboard", href: "/", icon: Home },
-  { name: "Hiring Requests", href: "/hiring-requests", icon: FileText },
-  { name: "Messages", href: "/messages", icon: MessageSquare },
-  { name: "Calendar", href: "/calendar", icon: Calendar },
-  { name: "Analytics", href: "/analytics", icon: Info },
+  { name: "Dashboard", href: "/followup", icon: Home },
+  {
+    name: "Hiring Requests",
+    href: "/followup/hiring-requests",
+    icon: FileText,
+  },
+  { name: "Calendar", href: "/followup/calendar", icon: Calendar },
 ];
 
 const hrNavigation = [
-  { name: "Dashboard", href: "/", icon: Home },
-  { name: "Forms", href: "/forms", icon: FileText },
-  { name: "Messages", href: "/messages", icon: MessageSquare },
-  { name: "Settings", href: "/settings", icon: Info },
+  { name: "Dashboard", href: "/dashboard", icon: Home },
+  { name: "Forms", href: "/dashboard/forms", icon: FileText },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { user } = useUser();
+  const router = useRouter();
+  const { user, logout } = useUser();
 
   // Get navigation items based on user role
   const getNavigation = () => {
@@ -53,6 +58,12 @@ export function Sidebar() {
       default:
         return [];
     }
+  };
+
+  const handleLogout = () => {
+    console.log("🚪 Logging out user:", user?.email);
+    logout();
+    router.push("/login");
   };
 
   return (
@@ -81,7 +92,7 @@ export function Sidebar() {
                 "U"}
             </span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-1">
             <span className="text-sm font-medium text-gray-900">
               {user?.name || user?.email?.split("@")[0] || "User"}
             </span>
@@ -107,33 +118,21 @@ export function Sidebar() {
               >
                 <item.icon className="h-5 w-5" />
                 <span>{item.name}</span>
-                {item.name === "Hiring Requests" && (
-                  <Badge className="ml-auto bg-gray-100 text-gray-600 text-xs font-medium px-2 py-0.5">
-                    23
-                  </Badge>
-                )}
-                {item.name === "Messages" && (
-                  <Badge className="ml-auto bg-gray-100 text-gray-600 text-xs font-medium px-2 py-0.5">
-                    5
-                  </Badge>
-                )}
               </Link>
             </li>
           ))}
         </ul>
       </nav>
 
-      {/* Footer */}
-      <div className="mt-auto border-t pt-4 pb-4 px-6">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-bold">N</span>
-          </div>
-          <span className="text-sm text-gray-500">3 Issues</span>
-          <button className="ml-auto text-gray-400 hover:text-gray-600">
-            ×
-          </button>
-        </div>
+      {/* Logout Button */}
+      <div className="border-t pt-4 pb-4 px-6">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium"
+        >
+          <LogOut className="h-5 w-5" />
+          <span>Logout</span>
+        </button>
       </div>
     </aside>
   );

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "../../components/user-context";
 import { Button } from "../../components/ui/button";
 import {
   Card,
@@ -20,6 +21,14 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { login, isAuthenticated } = useUser();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,101 +36,93 @@ export default function LoginPage() {
     setError("");
 
     try {
-      // Try multiple authentication endpoints
-      const authEndpoints = [
-        "http://localhost:5000/api/auth/login", // FormBackend (has followup users)
-        "http://localhost:5001/api/auth/login", // DashboardBackend
-      ];
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
-      let loginSuccess = false;
-      let userData = null;
+      console.log(`🔐 Attempting login with: ${apiUrl}/api/auth/login`);
 
-      for (const endpoint of authEndpoints) {
-        try {
-          console.log(`🔐 Attempting login with: ${endpoint}`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      const response = await fetch(`${apiUrl}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        signal: controller.signal,
+      });
 
-          const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password,
-            }),
-            signal: controller.signal,
-          });
+      clearTimeout(timeoutId);
 
-          clearTimeout(timeoutId);
-
-          // Check if response is JSON
-          const contentType = response.headers.get("content-type");
-          if (!contentType || !contentType.includes("application/json")) {
-            console.log(`❌ ${endpoint} returned non-JSON response`);
-            continue; // Try next endpoint
-          }
-
-          const data = await response.json();
-
-          if (response.ok && (data.success || data.token)) {
-            console.log(`✅ Login successful with: ${endpoint}`);
-            loginSuccess = true;
-            userData = data;
-            break; // Success, exit loop
-          } else {
-            console.log(`❌ ${endpoint} returned error:`, data.message);
-            setError(data.message || "Invalid credentials");
-            continue; // Try next endpoint
-          }
-        } catch (endpointError) {
-          console.log(`❌ ${endpoint} failed:`, endpointError);
-          continue; // Try next endpoint
-        }
+      // Check if response is JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        console.error("❌ Non-JSON response:", text.substring(0, 200));
+        setError("Server error: Invalid response format");
+        return;
       }
 
-      if (loginSuccess && userData) {
-        // Store the token and user data
-        localStorage.setItem("token", userData.token);
-        localStorage.setItem("user", JSON.stringify(userData.user));
+      const data = await response.json();
 
-        console.log("🎉 Login successful, redirecting...");
-
-        // Redirect based on user role
-        switch (userData.user.role) {
-          case "FOLLOW_UP_TEAM":
-            router.push("/followup"); // Followup team go to their dashboard
-            break;
-          case "HOD":
-            router.push("/hod"); // HODs go to HOD dashboard
-            break;
-          case "ADMIN":
-            router.push("/admin"); // Admins go to admin dashboard
-            break;
-          case "HR":
-            router.push("/dashboard"); // HR managers go to their dashboard
-            break;
-          case "FOLLOW_UP_TEAM":
-            router.push("/followup"); // Followup team go to their dashboard
-            break;
-          default:
-            router.push("/"); // Default to dashboard
-        }
-      } else {
-        setError("Login failed. Please check your credentials and try again.");
+      if (!response.ok) {
+        console.log("❌ Login failed:", data.message);
+        setError(data.message || "Invalid credentials. Please try again.");
+        return;
       }
+
+      if (!data.token || !data.user) {
+        console.error("❌ Missing token or user in response:", data);
+        setError("Login failed: Missing authentication data");
+        return;
+      }
+
+      // Extract user data with normalized role names
+      const userData = {
+        ...data.user,
+        initials: (data.user.name || "U")
+          .split(" ")
+          .map((n: string) => n[0])
+          .join("")
+          .toUpperCase(),
+      };
+
+      console.log(
+        "✅ Login successful:",
+        userData.email,
+        "Role:",
+        userData.role
+      );
+
+      // Store in context and localStorage
+      login(data.token, userData);
+
+      // Redirect based on user role
+      const roleRoutingMap: { [key: string]: string } = {
+        ADMIN: "/admin",
+        HOD: "/hod",
+        HR: "/dashboard",
+        FOLLOW_UP_TEAM: "/followup",
+      };
+
+      const redirectUrl = roleRoutingMap[userData.role] || "/dashboard";
+      console.log(`🎯 Redirecting to: ${redirectUrl}`);
+
+      router.push(redirectUrl);
     } catch (err: any) {
-      console.error("🚨 Critical login error:", err);
+      console.error("🚨 Login error:", err);
 
       if (err.name === "AbortError") {
         setError(
-          "Request timeout. Please check your connection and try again."
+          "Request timeout. Please check your internet connection and try again."
         );
       } else {
-        setError("Login failed. Please try again later or contact support.");
+        setError("Login failed. Please check your credentials and try again.");
       }
     } finally {
       setIsLoading(false);
@@ -172,6 +173,7 @@ export default function LoginPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10"
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
@@ -190,6 +192,7 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10"
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
