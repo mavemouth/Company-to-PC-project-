@@ -10,11 +10,7 @@ router.get("/", async (req, res) => {
   try {
     const forms = await Form.find().sort({ createdAt: -1 });
     console.log(`✅ Fetched ${forms.length} submissions`);
-    res.json({
-      message: "✅ /api/submissions endpoint is working!",
-      count: forms.length,
-      data: forms,
-    });
+    res.json(forms);
   } catch (err) {
     console.error("❌ Error fetching submissions:", err);
     res.status(500).json({ error: "Error fetching submissions" });
