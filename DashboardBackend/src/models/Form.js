@@ -89,6 +89,7 @@ const formSchema = new mongoose.Schema({
   },
 });
 
-const Form = mongoose.model("Form", formSchema);
+// Check if model already exists to avoid duplicate registration
+const Form = mongoose.models.Form || mongoose.model("Form", formSchema);
 
 module.exports = Form;
