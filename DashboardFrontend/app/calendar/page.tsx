@@ -49,7 +49,7 @@ export default function CalendarPage() {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hr/submissions",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hr/submissions`,
         {
           //http://localhost:5001/
           headers: {

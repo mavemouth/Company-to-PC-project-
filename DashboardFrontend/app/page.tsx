@@ -118,7 +118,7 @@ export default function Dashboard() {
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions`,
         {
           method: "GET",
           headers: {

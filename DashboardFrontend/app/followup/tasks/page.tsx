@@ -48,7 +48,7 @@ export default function TasksPage() {
   const fetchTasks = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/tasks",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/tasks`,
         {
           //http://localhost:5001
           headers: {
@@ -83,7 +83,7 @@ export default function TasksPage() {
 
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/tasks",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/tasks`,
         {
           //http://localhost:5001
           method: "POST",

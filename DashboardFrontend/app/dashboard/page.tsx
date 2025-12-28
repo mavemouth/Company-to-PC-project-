@@ -186,7 +186,7 @@ export default function Dashboard() {
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions`,
         {
           //http://localhost:5000
           method: "GET",
@@ -465,7 +465,7 @@ export default function Dashboard() {
     try {
       // Send message to backend
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/send",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/send`,
         {
           //http://localhost:5000
           method: "POST",
@@ -545,7 +545,7 @@ export default function Dashboard() {
 
         // Mark messages as read
         await fetch(
-          "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/mark-read",
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/mark-read`,
           {
             //http://localhost:5000
             method: "PUT",

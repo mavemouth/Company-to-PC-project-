@@ -106,7 +106,7 @@ export default function AdminDashboard() {
   const fetchOverview = async () => {
     try {
       const response = await fetch(
-        "`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/overview"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/overview`
       ); //http://localhost:5001/api/admin/overview
       const data = await response.json();
       setOverviewStats(data);
@@ -118,7 +118,7 @@ export default function AdminDashboard() {
   const fetchUsers = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users`
       );
       const data = await response.json();
       setUsers(data);
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
   const fetchHiringRequests = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/hiring-requests"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/hiring-requests`
       );
       const data = await response.json();
       setHiringRequests(data);
@@ -142,14 +142,14 @@ export default function AdminDashboard() {
   const fetchAnalytics = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/analytics"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/analytics`
       );
       const data = await response.json();
       setAnalytics(data);
 
       // Fetch followup workload directly from FormBackend team-progress endpoint (same as followup dashboard)
       const workloadResponse = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/team/team-progress"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/team/team-progress`
       );
       const workloadData = await workloadResponse.json();
       console.log("📊 Team progress data from FormBackend:", workloadData);
@@ -169,7 +169,7 @@ export default function AdminDashboard() {
 
       // Calculate department stats from hiring requests
       const requestsResponse = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/hiring-requests"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/hiring-requests`
       );
       const requestsData = await requestsResponse.json();
       console.log(
@@ -237,7 +237,7 @@ export default function AdminDashboard() {
   const fetchCalendar = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/calendar"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/calendar`
       );
       const data = await response.json();
       setCalendarEvents(data);
@@ -249,7 +249,7 @@ export default function AdminDashboard() {
   const handleCreateUser = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

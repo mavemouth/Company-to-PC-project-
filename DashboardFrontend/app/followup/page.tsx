@@ -233,7 +233,7 @@ export default function FollowupTeamDashboard() {
     try {
       // Send message to backend
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/send", //http://localhost:5000
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/send`, //http://localhost:5000
         {
           method: "POST",
           headers: {
@@ -315,7 +315,7 @@ export default function FollowupTeamDashboard() {
 
         // Mark messages as read
         await fetch(
-          "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/mark-read", //http://localhost:5000
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/mark-read`, //http://localhost:5000
           {
             method: "PUT",
             headers: {

@@ -51,7 +51,7 @@ export default function UsersPage() {
   const fetchUsers = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/users"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/users`
       );
       if (response.ok) {
         const data = await response.json();
@@ -91,7 +91,7 @@ export default function UsersPage() {
   const exportToCSV = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/export/csv"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/export/csv`
       );
       if (response.ok) {
         const blob = await response.blob();

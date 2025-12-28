@@ -18,7 +18,7 @@ export default function DebugPage() {
     try {
       // Test the debug endpoint first
       const debugResponse = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hr/debug/all-submissions" //http://localhost:5001
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hr/debug/all-submissions` //http://localhost:5001
       );
       const debugData = await debugResponse.json();
 
@@ -27,7 +27,7 @@ export default function DebugPage() {
       // Test the actual API
       const token = localStorage.getItem("authToken");
       const userResponse = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hr/submissions", //http://localhost:5001
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hr/submissions`, //http://localhost:5001
         {
           headers: {
             Authorization: `Bearer ${token}`,

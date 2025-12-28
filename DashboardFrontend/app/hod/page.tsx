@@ -166,7 +166,7 @@ export default function HODDashboard() {
   const fetchComparisonData = async () => {
     try {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hod/comparison"
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hod/comparison`
       );
       if (response.ok) {
         const data = await response.json();
