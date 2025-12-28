@@ -11,13 +11,13 @@ router.get("/overview", async (req, res) => {
 
     // Fetch all users from FormBackend
     const usersResponse = await fetch(
-      "${process.env.FRONTEND_URL}/api/users/all"
+      `${process.env.FRONTEND_URL}/api/users/all`
     );
     const users = await usersResponse.json();
 
     // Fetch all hiring requests
     const formsResponse = await fetch(
-      "${process.env.FRONTEND_URL}/api/submissions"
+      `${process.env.FRONTEND_URL}/api/submissions`
     );
     const forms = await formsResponse.json();
 
@@ -82,7 +82,7 @@ router.get("/overview", async (req, res) => {
 router.get("/users", async (req, res) => {
   try {
     const fetch = (await import("node-fetch")).default;
-    const response = await fetch("${process.env.FRONTEND_URL}/api/users/all");
+    const response = await fetch(`${process.env.FRONTEND_URL}/api/users/all`);
     const users = await response.json();
 
     res.json(users);
@@ -97,7 +97,7 @@ router.post("/users", async (req, res) => {
   try {
     const fetch = (await import("node-fetch")).default;
     const response = await fetch(
-      "${process.env.FRONTEND_URL}/api/users/create",
+      `${process.env.FRONTEND_URL}/api/users/create`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -180,7 +180,7 @@ router.post("/users/:userId/reset-password", async (req, res) => {
 router.get("/hiring-requests", async (req, res) => {
   try {
     const fetch = (await import("node-fetch")).default;
-    const response = await fetch("${process.env.FRONTEND_URL}/api/submissions");
+    const response = await fetch(`${process.env.FRONTEND_URL}/api/submissions`);
     const forms = await response.json();
 
     res.json(forms);
@@ -239,7 +239,7 @@ router.get("/followup-assignments", async (req, res) => {
   try {
     const fetch = (await import("node-fetch")).default;
     const response = await fetch(
-      "${process.env.FRONTEND_URL}/api/followup/all-assignments"
+      `${process.env.FRONTEND_URL}/api/followup/all-assignments`
     );
     const assignments = await response.json();
 
@@ -255,7 +255,7 @@ router.post("/followup-assignments/reassign", async (req, res) => {
   try {
     const fetch = (await import("node-fetch")).default;
     const response = await fetch(
-      "${process.env.FRONTEND_URL}/api/followup/reassign",
+      `${process.env.FRONTEND_URL}/api/followup/reassign`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -314,7 +314,7 @@ router.get("/followup-workload", async (req, res) => {
     let assignments = [];
     try {
       const formsResponse = await fetch(
-        "${process.env.FRONTEND_URL}/api/submissions"
+        `${process.env.FRONTEND_URL}/api/submissions`
       );
       const forms = await formsResponse.json();
 
@@ -434,7 +434,7 @@ router.get("/followup-workload", async (req, res) => {
 router.get("/analytics", async (req, res) => {
   try {
     const fetch = (await import("node-fetch")).default;
-    const response = await fetch("${process.env.FRONTEND_URL}/api/submissions");
+    const response = await fetch(`${process.env.FRONTEND_URL}/api/submissions`);
     const forms = await response.json();
 
     // Company-wise statistics
@@ -555,7 +555,7 @@ router.get("/analytics", async (req, res) => {
 router.get("/calendar", async (req, res) => {
   try {
     const fetch = (await import("node-fetch")).default;
-    const response = await fetch("${process.env.FRONTEND_URL}/api/submissions");
+    const response = await fetch(`${process.env.FRONTEND_URL}/api/submissions`);
     const forms = await response.json();
 
     // Get all campus visits across all departments

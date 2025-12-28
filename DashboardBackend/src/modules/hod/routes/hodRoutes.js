@@ -49,7 +49,7 @@ router.get("/companies", async (req, res) => {
     // Fetch ALL forms from FormBackend (same as HR dashboard does)
     const fetch = (await import("node-fetch")).default;
     const formsResponse = await fetch(
-      "${process.env.FRONTEND_URL}/api/submissions"
+      `${process.env.FRONTEND_URL}/api/submissions`
     );
 
     if (!formsResponse.ok) {
@@ -108,7 +108,7 @@ router.get("/analytics", async (req, res) => {
     // Fetch ALL forms from FormBackend
     const fetch = (await import("node-fetch")).default;
     const formsResponse = await fetch(
-      "${process.env.FRONTEND_URL}/api/submissions"
+      `${process.env.FRONTEND_URL}/api/submissions`
     );
 
     if (!formsResponse.ok) {
@@ -191,7 +191,7 @@ router.get("/calendar", async (req, res) => {
     // Fetch ALL forms from FormBackend (same as HR dashboard does)
     const fetch = (await import("node-fetch")).default;
     const formsResponse = await fetch(
-      "${process.env.FRONTEND_URL}/api/submissions"
+      `${process.env.FRONTEND_URL}/api/submissions`
     );
 
     if (!formsResponse.ok) {
