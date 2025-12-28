@@ -117,7 +117,9 @@ export default function AdminDashboard() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/admin/users");
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users"
+      );
       const data = await response.json();
       setUsers(data);
     } catch (error) {
@@ -128,7 +130,7 @@ export default function AdminDashboard() {
   const fetchHiringRequests = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5001/api/admin/hiring-requests"
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/hiring-requests"
       );
       const data = await response.json();
       setHiringRequests(data);
@@ -139,13 +141,15 @@ export default function AdminDashboard() {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/admin/analytics");
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/analytics"
+      );
       const data = await response.json();
       setAnalytics(data);
 
       // Fetch followup workload directly from FormBackend team-progress endpoint (same as followup dashboard)
       const workloadResponse = await fetch(
-        "http://localhost:5000/api/team/team-progress"
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/team/team-progress"
       );
       const workloadData = await workloadResponse.json();
       console.log("📊 Team progress data from FormBackend:", workloadData);
@@ -165,7 +169,7 @@ export default function AdminDashboard() {
 
       // Calculate department stats from hiring requests
       const requestsResponse = await fetch(
-        "http://localhost:5001/api/admin/hiring-requests"
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/hiring-requests"
       );
       const requestsData = await requestsResponse.json();
       console.log(
@@ -232,7 +236,9 @@ export default function AdminDashboard() {
 
   const fetchCalendar = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/admin/calendar");
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/calendar"
+      );
       const data = await response.json();
       setCalendarEvents(data);
     } catch (error) {
@@ -242,11 +248,14 @@ export default function AdminDashboard() {
 
   const handleCreateUser = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/admin/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUserData),
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newUserData),
+        }
+      );
 
       if (response.ok) {
         alert("User created successfully!");
@@ -271,7 +280,7 @@ export default function AdminDashboard() {
   const handleEditUser = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/admin/users/${editingUser._id}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users/${editingUser._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -319,7 +328,7 @@ export default function AdminDashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/admin/users/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/users/${userId}`,
         {
           method: "DELETE",
         }
@@ -341,7 +350,7 @@ export default function AdminDashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/admin/hiring-requests/${requestId}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/admin/hiring-requests/${requestId}`,
         {
           method: "DELETE",
         }
