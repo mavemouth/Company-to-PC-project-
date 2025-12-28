@@ -285,7 +285,7 @@ router.get("/followup-workload", async (req, res) => {
 
     // Get all follow-up users from database - accept both .followup@ and @thapar.edu emails
     const usersResponse = await fetch(
-      "${process.env.FRONTEND_URL}/api/users/all"
+      `${process.env.FRONTEND_URL}/api/users/all`
     );
     const users = await usersResponse.json();
     const followupUsers = users.filter((u) => u.role === "FOLLOW_UP_TEAM");
