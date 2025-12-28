@@ -87,7 +87,10 @@ export default function FollowupTeamDashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/unread-count?email=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/messages/unread-count?email=${encodeURIComponent(
+          //http://localhost:5000
           user.email
         )}`
       );
@@ -124,9 +127,9 @@ export default function FollowupTeamDashboard() {
 
       // Fetch assigned requests
       const requestsRes = await fetch(
-        `http://localhost:5000/api/followup/assigned-requests?email=${encodeURIComponent(
-          email
-        )}`,
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/followup/assigned-requests?email=${encodeURIComponent(email)}`, //http://localhost:5000
         {
           headers: {
             "Content-Type": "application/json",
@@ -146,9 +149,9 @@ export default function FollowupTeamDashboard() {
 
       // Fetch today's tasks
       const tasksRes = await fetch(
-        `http://localhost:5000/api/followup/tasks/today?email=${encodeURIComponent(
-          email
-        )}`,
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/followup/tasks/today?email=${encodeURIComponent(email)}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -165,9 +168,9 @@ export default function FollowupTeamDashboard() {
 
       // Fetch analytics
       const analyticsRes = await fetch(
-        `http://localhost:5000/api/followup/analytics?email=${encodeURIComponent(
-          email
-        )}`,
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/followup/analytics?email=${encodeURIComponent(email)}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -184,9 +187,9 @@ export default function FollowupTeamDashboard() {
 
       // Fetch calendar events
       const calendarRes = await fetch(
-        `http://localhost:5000/api/followup/calendar?email=${encodeURIComponent(
-          email
-        )}`,
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/followup/calendar?email=${encodeURIComponent(email)}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -203,7 +206,7 @@ export default function FollowupTeamDashboard() {
 
       // Fetch team progress
       const teamRes = await fetch(
-        "http://localhost:5000/api/team/team-progress",
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/team/team-progress", //http://localhost:5000
         {
           headers: {
             "Content-Type": "application/json",
@@ -229,21 +232,24 @@ export default function FollowupTeamDashboard() {
 
     try {
       // Send message to backend
-      const response = await fetch("http://localhost:5000/api/messages/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          senderEmail: user.email,
-          senderName: user.name,
-          senderRole: "FOLLOW_UP_TEAM",
-          recipientEmail: selectedContact.email,
-          recipientName: selectedContact.name,
-          recipientRole: "HR",
-          message: messageText,
-        }),
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/send", //http://localhost:5000
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            senderEmail: user.email,
+            senderName: user.name,
+            senderRole: "FOLLOW_UP_TEAM",
+            recipientEmail: selectedContact.email,
+            recipientName: selectedContact.name,
+            recipientRole: "HR",
+            message: messageText,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -282,7 +288,9 @@ export default function FollowupTeamDashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/conversation?user1=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/messages/conversation?user1=${encodeURIComponent(
           user.email
         )}&user2=${encodeURIComponent(partnerEmail)}`
       );
@@ -306,16 +314,19 @@ export default function FollowupTeamDashboard() {
         }));
 
         // Mark messages as read
-        await fetch("http://localhost:5000/api/messages/mark-read", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            senderEmail: partnerEmail,
-            recipientEmail: user.email,
-          }),
-        });
+        await fetch(
+          "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/mark-read", //http://localhost:5000
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              senderEmail: partnerEmail,
+              recipientEmail: user.email,
+            }),
+          }
+        );
       }
     } catch (error) {
       console.error("Error fetching conversation:", error);
@@ -356,7 +367,10 @@ export default function FollowupTeamDashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/followup/request/${taskId}/status?email=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/followup/request/${taskId}/status?email=${encodeURIComponent(
+          //http://localhost:5000
           user.email
         )}`,
         {

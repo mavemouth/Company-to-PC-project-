@@ -58,11 +58,15 @@ export default function HiringRequestsPage() {
   const fetchHiringRequests = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://localhost:5001/api/hr/submissions", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hr/submissions",
+        {
+          //http://localhost:5001
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();

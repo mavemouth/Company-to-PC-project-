@@ -1,3 +1,4 @@
+// For Local run use http://localhost:5001 on ${process.env.NEXT_PUBLIC_API_BASE_URL}.
 "use client";
 
 import { useState, useEffect } from "react";
@@ -93,7 +94,10 @@ export default function HODDashboard() {
   const fetchCompanies = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/hod/companies?department=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/hod/companies?department=${encodeURIComponent(
+          //http://localhost:5001
           currentUser.department
         )}`
       );
@@ -111,7 +115,9 @@ export default function HODDashboard() {
   const fetchAnalytics = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/hod/analytics?department=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/hod/analytics?department=${encodeURIComponent(
           currentUser.department
         )}`
       );
@@ -132,7 +138,9 @@ export default function HODDashboard() {
         currentUser.department
       );
       const response = await fetch(
-        `http://localhost:5001/api/hod/calendar?department=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/hod/calendar?department=${encodeURIComponent(
           currentUser.department
         )}`
       );
@@ -157,7 +165,9 @@ export default function HODDashboard() {
 
   const fetchComparisonData = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/hod/comparison");
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hod/comparison"
+      );
       if (response.ok) {
         const data = await response.json();
         setComparisonData(data);
@@ -171,7 +181,9 @@ export default function HODDashboard() {
   const fetchStudents = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/hod/students?department=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/hod/students?department=${encodeURIComponent(
           currentUser.department
         )}`
       );

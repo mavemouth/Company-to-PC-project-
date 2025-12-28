@@ -47,11 +47,15 @@ export default function TasksPage() {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/followup/tasks", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/tasks",
+        {
+          //http://localhost:5001
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       const data = await response.json();
       if (data.success) {
         setTasks(data.tasks);
@@ -78,14 +82,18 @@ export default function TasksPage() {
     };
 
     try {
-      const response = await fetch("http://localhost:5001/api/followup/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(newTask),
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/tasks",
+        {
+          //http://localhost:5001
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(newTask),
+        }
+      );
 
       const data = await response.json();
       if (data.success) {
@@ -109,7 +117,7 @@ export default function TasksPage() {
   const updateTaskStatus = async (taskId: string, status: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/followup/tasks/${taskId}/status`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/tasks/${taskId}/status`, //http://localhost:5001
         {
           method: "PUT",
           headers: {

@@ -1,3 +1,4 @@
+//For local run use http://localhost:5001 on ${process.env.NEXT_PUBLIC_API_BASE_URL}.
 "use client";
 
 import { useState, useEffect } from "react";
@@ -49,7 +50,9 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/auth/users");
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/users"
+      );
       if (response.ok) {
         const data = await response.json();
         setUsers(data.users || []);
@@ -87,7 +90,9 @@ export default function UsersPage() {
 
   const exportToCSV = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/auth/export/csv");
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/export/csv"
+      );
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);

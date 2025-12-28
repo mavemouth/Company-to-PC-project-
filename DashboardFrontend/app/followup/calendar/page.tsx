@@ -44,7 +44,7 @@ export default function CalendarPage() {
   const fetchEvents = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5001/api/followup/calendar",
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/calendar", //http://localhost:5001
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -82,7 +82,7 @@ export default function CalendarPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5001/api/followup/calendar/events",
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/calendar/events", //http://localhost:5001
         {
           method: "POST",
           headers: {
@@ -114,7 +114,7 @@ export default function CalendarPage() {
   const handleDeleteEvent = async (eventId: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/followup/calendar/events/${eventId}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/calendar/events/${eventId}`, //http://localhost:5001
         {
           method: "DELETE",
         }

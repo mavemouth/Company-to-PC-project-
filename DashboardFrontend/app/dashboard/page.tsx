@@ -160,7 +160,7 @@ export default function Dashboard() {
       const user = JSON.parse(storedUser);
       // Fetch the request assignment to find which followup member is assigned
       const response = await fetch(
-        `http://localhost:5000/api/followup/hr-assignment?hrEmail=${user.email}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/followup/hr-assignment?hrEmail=${user.email}` //http://localhost:5000/
       );
       if (response.ok) {
         const data = await response.json();
@@ -185,14 +185,18 @@ export default function Dashboard() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-      const response = await fetch("http://localhost:5000/api/submissions", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions",
+        {
+          //http://localhost:5000
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          signal: controller.signal,
+        }
+      );
 
       clearTimeout(timeoutId);
 
@@ -439,7 +443,10 @@ export default function Dashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/unread-count?email=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/messages/unread-count?email=${encodeURIComponent(
+          //http://localhost:5000
           currentUser.email
         )}`
       );
@@ -457,21 +464,25 @@ export default function Dashboard() {
 
     try {
       // Send message to backend
-      const response = await fetch("http://localhost:5000/api/messages/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          senderEmail: currentUser.email,
-          senderName: currentUser.name || currentUser.email.split("@")[0],
-          senderRole: "HR",
-          recipientEmail: selectedContact.email,
-          recipientName: selectedContact.name,
-          recipientRole: "FOLLOW_UP_TEAM",
-          message: messageText,
-        }),
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/send",
+        {
+          //http://localhost:5000
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            senderEmail: currentUser.email,
+            senderName: currentUser.name || currentUser.email.split("@")[0],
+            senderRole: "HR",
+            recipientEmail: selectedContact.email,
+            recipientName: selectedContact.name,
+            recipientRole: "FOLLOW_UP_TEAM",
+            message: messageText,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -506,7 +517,10 @@ export default function Dashboard() {
   const fetchConversation = async (partnerEmail: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/conversation?user1=${encodeURIComponent(
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/messages/conversation?user1=${encodeURIComponent(
+          //http://localhost:5000
           currentUser.email
         )}&user2=${encodeURIComponent(partnerEmail)}`
       );
@@ -530,16 +544,20 @@ export default function Dashboard() {
         }));
 
         // Mark messages as read
-        await fetch("http://localhost:5000/api/messages/mark-read", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            senderEmail: partnerEmail,
-            recipientEmail: currentUser.email,
-          }),
-        });
+        await fetch(
+          "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/messages/mark-read",
+          {
+            //http://localhost:5000
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              senderEmail: partnerEmail,
+              recipientEmail: currentUser.email,
+            }),
+          }
+        );
       }
     } catch (error) {
       console.error("Error fetching conversation:", error);

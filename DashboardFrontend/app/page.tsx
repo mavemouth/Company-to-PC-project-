@@ -1,4 +1,5 @@
-﻿"use client";
+﻿//For local run use http://localhost:5000 on ${process.env.NEXT_PUBLIC_API_BASE_URL}.
+"use client";
 
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "../components/ui/card";
@@ -116,14 +117,17 @@ export default function Dashboard() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-      const response = await fetch("http://localhost:5000/api/submissions", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        "${process.env.NEXT_PUBLIC_API_BASE_URL}/api/submissions",
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          signal: controller.signal,
+        }
+      );
 
       clearTimeout(timeoutId);
 
