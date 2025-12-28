@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Form = require("../../../models/Form");
 
+console.log("✅ submissionsRoutes loaded");
+
 // GET: View all submissions (for dashboard)
 router.get("/", async (req, res) => {
   console.log("📥 /api/submissions endpoint called");
